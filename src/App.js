@@ -11,8 +11,7 @@ class App extends Component {
 
   initState() {
     // Load vendors from JSON file
-    let jsonUrl =
-      "https://raw.githubusercontent.com/justinmahar/create-openjdk-jre-with-jlink/master/src/json/vendors.json";
+    let jsonUrl = "vendors.json";
     let request = new XMLHttpRequest();
     request.open("GET", jsonUrl, false);
     request.send(null);
