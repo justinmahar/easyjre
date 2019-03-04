@@ -18,7 +18,6 @@ class App extends Component {
     request.send(null);
     let jsonResponseText = request.responseText;
     let vendors = JSON.parse(jsonResponseText);
-    console.log(vendors);
 
     let selectedVendorIndex = 0;
     let selectedJdkIndex = 0;
@@ -39,7 +38,6 @@ class App extends Component {
   }
 
   handleJdkChange(event) {
-    console.log(event.target.value);
     let selectedJdkIndex = event.target.value;
     this.setState({
       selectedJdkIndex: selectedJdkIndex
