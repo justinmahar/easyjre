@@ -1,10 +1,10 @@
 # Easy JRE
 
-This tool allows you to easily create a custom OpenJDK JRE using jlink!
+This tool allows you to easily create a custom OpenJDK JRE using `jlink`!
 
 To get started, visit the following site:
 
-https://justinmahar.github.io/easyjre/
+    https://justinmahar.github.io/easyjre/
 
 The project was created using React and is hosted on GitHub pages.
 
