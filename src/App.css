@@ -1,0 +1,18 @@
+body {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+a:visited {
+  color: blue;
+}
+
+code {
+  background-color: rgb(236, 236, 236);
+  font-family: 'Courier New', Courier, monospace;
+  padding: 1px;
+  margin: 1px;
+  display: inline-block;
+  border: solid 1px rgb(219, 219, 219);
+  border-radius: 2px;
+}

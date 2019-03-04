@@ -47,7 +47,12 @@ class App extends Component {
   handleCopyButtonClick(event) {
     let commandTextarea = document.getElementById("jlink-command-textarea");
     commandTextarea.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
+    event.preventDefault();
+  }
+
+  handleJlinkCommandTextareaClick(event) {
+    event.target.select();
   }
 
   render() {
@@ -87,18 +92,30 @@ class App extends Component {
 
     jreIncludedModules.forEach((element, index) => {
       moduleString += element;
-      if(index < jreIncludedModules.length - 1) {
-        moduleString += ","
+      if (index < jreIncludedModules.length - 1) {
+        moduleString += ",";
       }
     });
 
+    let productName =
+      selectedVendor.organization + " " + selectedVendor.product;
+
+    let jreFolderName =
+      "jre-" +
+      selectedJdk.version +
+      "-" +
+      productName.toLowerCase().replace(/[^a-z0-9]/g, "-");
+
     let jlinkCommand =
-      "jlink –output jre --compress=2 –add-modules " + moduleString;
+      ".\\jlink --output " +
+      jreFolderName +
+      " --compress=2 --no-header-files --no-man-pages --module-path ..\\jmods --add-modules " +
+      moduleString;
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <label>JDK: </label>
+      <div>
+        <header>
+          <h3>Select your JDK:</h3>
           <select onChange={this.handleProductChange.bind(this)}>
             {productOptionArray}
           </select>
@@ -108,11 +125,42 @@ class App extends Component {
           <a href={downloadJDKHref} target="_new">
             Download JDK &raquo;
           </a>
-          <p>
-            Create your {selectedVendor.organization + " " + selectedVendor.product} JRE {selectedJdk.version} using the <code>jlink</code> command below:
-          </p>
-          <textarea id="jlink-command-textarea" value={jlinkCommand} readOnly cols="80" rows="8"/>
+          <h3>
+            Create an OpenJDK{" "}
+            {selectedVendor.organization + " " + selectedVendor.product} JRE{" "}
+            {selectedJdk.version} using the <code>jlink</code> command below:
+          </h3>
+          <textarea
+            id="jlink-command-textarea"
+            value={jlinkCommand}
+            readOnly
+            cols="80"
+            rows="8"
+            onClick={this.handleJlinkCommandTextareaClick}
+          />
           <button onClick={this.handleCopyButtonClick.bind(this)}>Copy</button>
+          <p>Three easy steps:</p>
+          <ol>
+            <li>
+              Download and unpack{" "}
+              <a href={downloadJDKHref} target="_new">
+                {selectedVendor.organization} {selectedVendor.product} JDK{" "}
+                {selectedJdk.version}
+              </a>
+              .
+            </li>
+            <li>
+              <a href="#0" onClick={this.handleCopyButtonClick.bind(this)}>
+                Copy
+              </a>{" "}
+              the above <code>jlink</code> command and run it in the <code>bin</code>{" "}
+              directory of {selectedVendor.organization}{" "}
+              {selectedVendor.product} JDK {selectedJdk.version}.
+            </li>
+            <li>
+              Grab your JRE, which is in <code>bin\{jreFolderName}</code>{" "}.
+            </li>
+          </ol>
         </header>
       </div>
     );
