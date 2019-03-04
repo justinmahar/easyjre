@@ -1,8 +1,8 @@
 {
-  "name": "create-openjdk-jre-with-jlink",
+  "name": "easyjre",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://justinmahar.github.io/create-openjdk-jre-with-jlink/",
+  "homepage": "https://justinmahar.github.io/easyjre/",
   "dependencies": {
     "gh-pages": "^2.0.1",
     "react": "^16.8.3",
