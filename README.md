@@ -24,6 +24,26 @@ If you'd like to add a new JDK, fork the project and send me a pull request.
 
 Happy JRE building!
 
+# Development
+
+This project requires Node.js; I used v9.11.2.
+
+Clone the project and run `npm install` to install the dependencies. Run `npm start` to start the development server.
+
+## npm scripts
+
+### `npm start`
+
+Starts the development server.
+
+### `npm build`
+
+Builds the React app to the `build` directory.
+
+### `npm deploy`
+
+Deploys the built project in the `build` directory to the GitHub pages site `homepage` specified in `package.json`. The script uses the `gh-pages` dependency to do all the heavy lifting.
+
 # License 
 
 Copyright &copy; Justin Mahar
