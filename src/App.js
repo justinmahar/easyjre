@@ -114,54 +114,52 @@ class App extends Component {
 
     return (
       <div>
-        <header>
-          <h3>Select your JDK:</h3>
-          <select onChange={this.handleProductChange.bind(this)}>
-            {productOptionArray}
-          </select>
-          <select onChange={this.handleJdkChange.bind(this)}>
-            {jdksOptionArray}
-          </select>{" "}
-          <a href={downloadJDKHref} target="_new">
-            Download JDK &raquo;
-          </a>
-          <h3>
-            Create an OpenJDK{" "}
-            {selectedVendor.organization + " " + selectedVendor.product} JRE{" "}
-            {selectedJdk.version} using the <code>jlink</code> command below:
-          </h3>
-          <textarea
-            id="jlink-command-textarea"
-            value={jlinkCommand}
-            readOnly
-            cols="80"
-            rows="8"
-            onClick={this.handleJlinkCommandTextareaClick}
-          />
-          <button onClick={this.handleCopyButtonClick.bind(this)}>Copy</button>
-          <p>Three easy steps:</p>
-          <ol>
-            <li>
-              Download and unpack{" "}
-              <a href={downloadJDKHref} target="_new">
-                {selectedVendor.organization} {selectedVendor.product} JDK{" "}
-                {selectedJdk.version}
-              </a>
-              .
-            </li>
-            <li>
-              <a href="#0" onClick={this.handleCopyButtonClick.bind(this)}>
-                Copy
-              </a>{" "}
-              the above <code>jlink</code> command and run it in the <code>bin</code>{" "}
-              directory of {selectedVendor.organization}{" "}
-              {selectedVendor.product} JDK {selectedJdk.version}.
-            </li>
-            <li>
-              Grab your JRE, which is in <code>bin\{jreFolderName}</code>{" "}.
-            </li>
-          </ol>
-        </header>
+        <h3>Select your JDK:</h3>
+        <select onChange={this.handleProductChange.bind(this)}>
+          {productOptionArray}
+        </select>
+        <select onChange={this.handleJdkChange.bind(this)}>
+          {jdksOptionArray}
+        </select>{" "}
+        <a href={downloadJDKHref} target="_new">
+          Download JDK &raquo;
+        </a>
+        <h3>
+          Create your{" "}
+          {selectedVendor.organization + " " + selectedVendor.product} OpenJDK JRE{" "}
+          {selectedJdk.version} using the <code>jlink</code> command below:
+        </h3>
+        <textarea
+          id="jlink-command-textarea"
+          value={jlinkCommand}
+          readOnly
+          cols="80"
+          rows="8"
+          onClick={this.handleJlinkCommandTextareaClick}
+        />
+        <button onClick={this.handleCopyButtonClick.bind(this)}>Copy</button>
+        <p>Three easy steps:</p>
+        <ol>
+          <li>
+            Download and unpack{" "}
+            <a href={downloadJDKHref} target="_new">
+              {selectedVendor.organization} {selectedVendor.product} JDK{" "}
+              {selectedJdk.version}
+            </a>
+          </li>
+          <li>
+            <a href="#0" onClick={this.handleCopyButtonClick.bind(this)}>
+              Copy
+            </a>{" "}
+            the above <code>jlink</code> command and run it in the{" "}
+            <code>bin</code> directory of JDK {selectedJdk.version}
+          </li>
+          <li>
+            Grab your JRE, which is in <code>bin\{jreFolderName}</code>
+          </li>
+        </ol>
+        <br/><br/>
+        <footer>Copyright &copy; {new Date().getFullYear()} <a href="https://github.com/justinmahar">Justin Mahar</a> &bull; <a href="https://opensource.org/licenses/MIT">MIT License</a> &bull; <a href="https://github.com/justinmahar/easyjre">EasyJRE on GitHub</a></footer>
       </div>
     );
   }
