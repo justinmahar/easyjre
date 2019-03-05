@@ -19,59 +19,31 @@ class App extends Component {
     let vendors = JSON.parse(jsonResponseText);
 
     let selectedVendorIndex = 0;
-    let selectedJdkIndex = 0;
 
-    let selectedJdk =
-      vendors.vendors[selectedVendorIndex].jdks[selectedJdkIndex];
-    let jreIncludedModules = selectedJdk["jre_included_modules"];
-    let jreExcludedModules = selectedJdk["jre_excluded_modules"];
+    let jreIncludedModules = [];
+    let jreExcludedModules = [];
 
     this.state = {
       vendors: vendors.vendors,
       selectedVendorIndex: selectedVendorIndex,
-      selectedJdkIndex: selectedJdkIndex,
       jreIncludedModules: jreIncludedModules,
       jreExcludedModules: jreExcludedModules,
       optionCompressionType: 2,
       optionExcludeHeaderFiles: true,
       optionExcludeManPages: true,
       optionBindServices: false,
-      optionModulePath: "..\\jmods",
+      jdkVersion: "",
+      optionJdkBinPath: ".",
+      optionModulePath: "../jmods",
       optionAdditionalModules: ""
     };
   }
 
   handleProductChange(event) {
     let selectedVendorIndex = event.target.value;
-    let selectedJdkIndex = 0;
-
-    let selectedJdk = this.state.vendors[selectedVendorIndex].jdks[
-      selectedJdkIndex
-    ];
-    let jreIncludedModules = selectedJdk["jre_included_modules"];
-    let jreExcludedModules = selectedJdk["jre_excluded_modules"];
 
     this.setState({
-      selectedVendorIndex: selectedVendorIndex,
-      selectedJdkIndex: selectedJdkIndex,
-      jreIncludedModules: jreIncludedModules,
-      jreExcludedModules: jreExcludedModules
-    });
-  }
-
-  handleJdkChange(event) {
-    let selectedJdkIndex = event.target.value;
-
-    let selectedJdk = this.state.vendors[this.state.selectedVendorIndex].jdks[
-      selectedJdkIndex
-    ];
-    let jreIncludedModules = selectedJdk["jre_included_modules"];
-    let jreExcludedModules = selectedJdk["jre_excluded_modules"];
-
-    this.setState({
-      selectedJdkIndex: selectedJdkIndex,
-      jreIncludedModules: jreIncludedModules,
-      jreExcludedModules: jreExcludedModules
+      selectedVendorIndex: selectedVendorIndex
     });
   }
 
@@ -135,27 +107,93 @@ class App extends Component {
   }
 
   handleCompressionChange(event) {
-    console.log("compressionChange");
+    let newValue = event.target.value;
+    this.setState({
+      optionCompressionType: newValue
+    });
   }
-  
+
   handleExcludeHeaderFilesChange(event) {
-    console.log("handleExcludeHeaderFilesChange");
+    let newValue = event.target.checked;
+    this.setState({
+      optionExcludeHeaderFiles: newValue
+    });
   }
-  
+
   handleExcludeManPagesChange(event) {
-    console.log("handleExcludeManPagesChange");
+    let newValue = event.target.checked;
+    this.setState({
+      optionExcludeManPages: newValue
+    });
   }
-  
+
   handleBindServicesChange(event) {
-    console.log("handleBindServicesChange");
+    let newValue = event.target.checked;
+    this.setState({
+      optionBindServices: newValue
+    });
   }
-  
+
+  handleJdkBinPathChange(event) {
+    let newValue = event.target.value;
+    this.setState({
+      optionJdkBinPath: newValue
+    });
+  }
+
   handleModulePathChange(event) {
-    console.log("handleModulePathChange");
+    let newValue = event.target.value;
+    this.setState({
+      optionModulePath: newValue
+    });
   }
-  
+
   handleAdditionalModulesChange(event) {
-    console.log("handleAdditionalModulesChange");
+    let newValue = event.target.value.replace(/[ ]/g, "");
+    this.setState({
+      optionAdditionalModules: newValue
+    });
+  }
+
+  handlePasteClick(event) {
+    navigator.clipboard
+      .readText()
+      .then(text => {
+        let modules = text.split(/\r?\n/);
+        let strippedModules = [];
+        let jdkVersion = "";
+        modules.forEach((value, index) => {
+          value = value.trim();
+          if (value !== "" && value.indexOf("@") >= 0) {
+            jdkVersion = value.slice(value.indexOf("@") + 1);
+            value = value.slice(0, value.indexOf("@"));
+            strippedModules.push(value);
+          }
+        });
+
+        let startsWithExclusion = "jdk.";
+        let newJreExcludedModules = strippedModules.filter(element => {
+          return element.startsWith(startsWithExclusion);
+        });
+        newJreExcludedModules.sort();
+
+        let newJreIncludedModules = strippedModules.filter(element => {
+          return !element.startsWith(startsWithExclusion);
+        });
+        newJreIncludedModules.sort();
+
+        this.setState({
+          jreIncludedModules: newJreIncludedModules,
+          jreExcludedModules: newJreExcludedModules,
+          jdkVersion: jdkVersion.trim()
+        });
+
+        console.log("strippedModules: ", strippedModules);
+        console.log("jdkVersion: ", jdkVersion.trim());
+      })
+      .catch(err => {
+        console.error("Failed to read clipboard contents: ", err);
+      });
   }
 
   render() {
@@ -173,34 +211,17 @@ class App extends Component {
 
     let selectedVendor = this.state.vendors[this.state.selectedVendorIndex];
 
-    let jdksOptionArray = [];
-
-    selectedVendor.jdks.forEach((element, index) => {
-      let name = "JDK " + element.version;
-      let currOption = (
-        <option value={index} key={index}>
-          {name}
-        </option>
-      );
-      jdksOptionArray.push(currOption);
-    });
-
-    let selectedJdk = selectedVendor.jdks[this.state.selectedJdkIndex];
-
-    let downloadJDKHref = selectedJdk["jdk_download_link"];
+    let downloadJDKHref = selectedVendor["jdk_download_link"];
 
     let jreIncludedModules = this.state.jreIncludedModules;
     let jreExcludedModules = this.state.jreExcludedModules;
 
-    let moduleString = "";
+    let includedModulesString = "";
     let includedModulesOptionArray = [];
     jreIncludedModules.forEach((element, index) => {
-      if (index == 0) {
-        moduleString += " --add-modules ";
-      }
-      moduleString += element;
+      includedModulesString += element;
       if (index < jreIncludedModules.length - 1) {
-        moduleString += ",";
+        includedModulesString += ",";
       }
       let currModuleOption = (
         <option
@@ -214,6 +235,23 @@ class App extends Component {
       );
       includedModulesOptionArray.push(currModuleOption);
     });
+
+    let optionAdditionalModules = this.state.optionAdditionalModules.trim();
+
+    let moduleString = "";
+
+    if (includedModulesString !== "" || optionAdditionalModules !== "") {
+      moduleString = " --add-modules ";
+      if (includedModulesString !== "") {
+        moduleString += includedModulesString;
+      }
+      if (includedModulesString !== "" && optionAdditionalModules !== "") {
+        moduleString += ",";
+      }
+      if (optionAdditionalModules !== "") {
+        moduleString += optionAdditionalModules;
+      }
+    }
 
     let excludedModulesOptionArray = [];
     jreExcludedModules.forEach((element, index) => {
@@ -233,11 +271,13 @@ class App extends Component {
     let productName =
       selectedVendor.organization + " " + selectedVendor.product;
 
+    let jdkVersion = this.state.jdkVersion;
+    if (jdkVersion != "") {
+      productName += " " + jdkVersion;
+    }
+
     let jreFolderName =
-      "jre-" +
-      selectedJdk.version +
-      "-" +
-      productName.toLowerCase().replace(/[^a-z0-9]/g, "-");
+      "jre" + "-" + productName.toLowerCase().replace(/[^a-z0-9.]/g, "-");
 
     let outputCommandString = "--output " + jreFolderName;
 
@@ -246,13 +286,10 @@ class App extends Component {
     let optionExcludeHeaderFiles = this.state.optionExcludeHeaderFiles;
     let optionExcludeManPages = this.state.optionExcludeManPages;
     let optionBindServices = this.state.optionBindServices;
+    let optionJdkBinPath = this.state.optionJdkBinPath.trim();
     let optionModulePath = this.state.optionModulePath.trim();
-    let optionAdditionalModules = this.state.optionAdditionalModules.trim();
 
-    let compressionOptionString = "";
-    if (optionCompressionType != 0) {
-      compressionOptionString = " --compress=" + optionCompressionType;
-    }
+    let compressionOptionString = " --compress=" + optionCompressionType;
 
     let excludeHeaderFilesOptionString = "";
     if (optionExcludeHeaderFiles) {
@@ -275,7 +312,8 @@ class App extends Component {
     }
 
     let jlinkCommand =
-      ".\\jlink " +
+      optionJdkBinPath +
+      "/jlink " +
       outputCommandString +
       compressionOptionString +
       excludeHeaderFilesOptionString +
@@ -341,179 +379,324 @@ class App extends Component {
             </div>
             <div>
               <span className="font-bold inline-block text-sm px-4 py-2 leading-none text-white mt-4 lg:mt-0">
-                Create an OpenJDK JRE easily using jlink!
+                Use EasyJRE to create an OpenJDK JRE easily with jlink!
               </span>
             </div>
           </div>
         </nav>
-        <h1>The Easiest Way To Create An OpenJDK JRE</h1>
-        <h3>Select your JDK:</h3>
-        <select
-          onChange={this.handleProductChange.bind(this)}
-          className="rounded shadow border"
-        >
-          {productOptionArray}
-        </select>
-        <select
-          onChange={this.handleJdkChange.bind(this)}
-          className="rounded shadow border"
-        >
-          {jdksOptionArray}
-        </select>{" "}
-        <a
-          href={downloadJDKHref}
-          target="_new"
-          className="inline-block no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
-        >
-          Download JDK &raquo;
-        </a>
-        <h3>
-          Create your{" "}
-          {selectedVendor.organization + " " + selectedVendor.product} OpenJDK
-          JRE {selectedJdk.version} using the{" "}
-          <code className="font-mono border p-1 inline-block">jlink</code>{" "}
-          command below:
-        </h3>
-        <textarea
-          id="jlink-command-textarea"
-          value={jlinkCommand}
-          readOnly
-          cols="80"
-          rows="8"
-          className="rounded shadow border font-mono text-xs"
-          onClick={this.handleJlinkCommandTextareaClick}
-        />
-        <button
-          onClick={this.handleCopyButtonClick.bind(this)}
-          className="no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
-        >
-          Copy
-        </button>
-        <p>Three easy steps:</p>
-        <ol>
-          <li>
-            Download and unpack{" "}
-            <a href={downloadJDKHref} target="_new">
-              {selectedVendor.organization} {selectedVendor.product} JDK{" "}
-              {selectedJdk.version}
-            </a>
-          </li>
-          <li>
-            <a href="#0" onClick={this.handleCopyButtonClick.bind(this)}>
-              Copy
-            </a>{" "}
-            the above{" "}
-            <code className="font-mono border p-1 inline-block">jlink</code>{" "}
-            command and run it in the{" "}
-            <code className="font-mono border p-1 inline-block">bin</code>{" "}
-            directory of JDK {selectedJdk.version}
-          </li>
-          <li>
-            Grab your JRE, which is in{" "}
-            <code className="font-mono border p-1 inline-block">
-              bin\{jreFolderName}
-            </code>
-          </li>
-        </ol>
-        <h3>Customize Your JRE</h3>
-        <h4>Included Modules</h4>
-        <div>
-          <select id="jre-included-modules" size="8">
-            {includedModulesOptionArray}
-          </select>
-          <button
-            className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-            onClick={this.handleExcludeClick.bind(this)}
-          >
-            Exclude &darr;
-          </button>
-        </div>
-        <h4>Excluded Modules</h4>
-        <div>
-          <select id="jre-excluded-modules" size="8">
-            {excludedModulesOptionArray}
-          </select>
-          <button
-            className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-            onClick={this.handleIncludeClick.bind(this)}
-          >
-            Include &uarr;
-          </button>
-        </div>
-        <p>
-          <label htmlFor="compression" title="Enable compression of resources">
-            Compression:{" "}
-          </label>
+        <div className="text-center">
+          <h1>EasyJRE: The Easiest Way To Create An OpenJDK JRE for Java!</h1>
+          <h3>Select your JDK:</h3>
           <select
-            id="compression"
-            value={optionCompressionType}
-            title="Enable compression of resources"
+            onChange={this.handleProductChange.bind(this)}
             className="rounded shadow border"
-            onChange={this.handleCompressionChange.bind(this)}
           >
-            <option value="0">No compression</option>
-            <option value="1">Constant string sharing</option>
-            <option value="2">ZIP</option>
+            {productOptionArray}
           </select>
-        </p>
-        <p>
-          <label htmlFor="headers-excluded">Exclude header files </label>
-          <input
-            id="headers-excluded"
-            type="checkbox"
-            checked={true}
-            selected={optionExcludeHeaderFiles}
-          />
-        </p>
-        <p>
-          <label htmlFor="man-pages-excluded">Exclude man pages </label>
-          <input
-            id="man-pages-excluded"
-            type="checkbox"
-            checked={true}
-            selected={optionExcludeManPages}
-          />
-        </p>
-        <p>
-          <label
-            htmlFor="bind-services"
-            title="Link service provider modules and their dependencies."
+          <a
+            href={downloadJDKHref}
+            target="_new"
+            className="inline-block no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
           >
-            Bind services{" "}
-          </label>
-          <input
-            id="bind-services"
-            type="checkbox"
-            checked={false}
-            title="Link service provider modules and their dependencies."
-            selected={optionBindServices}
-          />
-        </p>
-        <p>
-          <label htmlFor="module-path">Module Path: </label>
-          <input
-            id="module-path"
-            type="text"
-            value={optionModulePath}
-            className="shadow appearance-none border rounded py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </p>
-        <p>
-          <label htmlFor="additional-modules">Additional modules: </label>
-          <input
-            id="additional-modules"
-            type="text"
-            value=""
-            placeholder="module1,mod2,etc"
-            value={optionAdditionalModules}
-            className="shadow appearance-none border rounded py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </p>
+            Download JDK &raquo;
+          </a>
+          <h3>Four easy steps:</h3>
+          <ol className="list-reset">
+            <li>
+              1. Download and unpack{" "}
+              <a href={downloadJDKHref} target="_new">
+                {selectedVendor.organization} {selectedVendor.product} JDK
+              </a>
+            </li>
+            <li>
+              <p>
+                2. Copy a list of the available JDK modules using the following
+                command <strong>in the JDK bin folder</strong>:
+              </p>
+              <ul className="list-reset">
+                <li>
+                  Windows:{" "}
+                  <code className="font-mono roman border inline-block">
+                    .\java --list-modules | clip
+                  </code>
+                </li>
+                <li>
+                  Linux/OSX:{" "}
+                  <code className="font-mono roman border inline-block">
+                    ./java --list-modules | pbcopy
+                  </code>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p>
+                3. Paste the modules here:{" "}
+                <button
+                  className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                  onClick={this.handlePasteClick.bind(this)}
+                >
+                  Paste
+                </button>
+                {jdkVersion &&
+                <span className="text-xs text-green font-bold">{" "}JDK {jdkVersion} ✓</span>}
+              </p>
+            </li>
+            <li>
+              <p>
+                4.{" "}
+                <a href="#0" onClick={this.handleCopyButtonClick.bind(this)}>
+                  Copy
+                </a>{" "}
+                the below{" "}
+                <code className="font-mono roman border inline-block">
+                  jlink
+                </code>{" "}
+                command and run it in the{" "}
+                <code className="font-mono roman border inline-block">bin</code>{" "}
+                directory of the JDK
+              </p>
+              <h3>
+                Create your{" "}
+                {selectedVendor.organization + " " + selectedVendor.product}{" "}
+                OpenJDK JRE using the{" "}
+                <code className="font-mono roman border inline-block">
+                  jlink
+                </code>{" "}
+                command below:
+              </h3>
+              <textarea
+                id="jlink-command-textarea"
+                value={jlinkCommand}
+                readOnly
+                cols="80"
+                rows="8"
+                className="rounded shadow border font-mono text-xs"
+                onClick={this.handleJlinkCommandTextareaClick}
+              />
+              <button
+                onClick={this.handleCopyButtonClick.bind(this)}
+                className="no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
+              >
+                Copy
+              </button>
+            </li>
+            <li>
+              Your JRE is in the{" "}
+              <code className="font-mono roman border inline-block">
+                {jreFolderName}
+              </code>{" "}
+              folder of your current working directory!
+            </li>
+          </ol>
+          <h3>
+            Customize Your{" "}
+            {selectedVendor.organization + " " + selectedVendor.product} JRE
+          </h3>
+          <p className="text-sm italic">
+            The JDK comes with many root modules which contain the JDK core
+            classes. The modules prefixed with{" "}
+            <code className="font-mono roman border inline-block">jdk.</code>{" "}
+            are typically not needed for a production JRE. Below, all non-JDK
+            modules have been included in the JRE. This will get you up and
+            running quickly without needing to use an entire JDK.
+          </p>
+          <p className="text-sm italic">
+            Free to exclude or include any modules you might need. For instance,
+            you can use the{" "}
+            <code className="font-mono roman border inline-block">jdeps</code>{" "}
+            command on your Java classes to narrow down which modules you
+            actually need to include.
+          </p>
+          <p className="text-sm italic">
+            There is another section below for adding your own custom modules to
+            the JRE.
+          </p>
+          {jdkVersion !== "" && (
+            <>
+              <h4>Included JDK Root Modules:</h4>
+              <div>
+                <select
+                  id="jre-included-modules"
+                  size="8"
+                  className="rounded shadow border"
+                >
+                  {includedModulesOptionArray}
+                </select>
+                <button
+                  className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                  onClick={this.handleExcludeClick.bind(this)}
+                >
+                  Exclude &darr;
+                </button>
+              </div>
+              <h4>Excluded JDK Root Modules:</h4>
+              <div>
+                <select
+                  id="jre-excluded-modules"
+                  size="8"
+                  className="rounded shadow border"
+                >
+                  {excludedModulesOptionArray}
+                </select>
+                <button
+                  className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                  onClick={this.handleIncludeClick.bind(this)}
+                >
+                  Include &uarr;
+                </button>
+              </div>
+            </>
+          )}
+          {!jdkVersion &&
+            <>
+            <div className="font-bold border p-1 inline-block">Please paste your JDK modules above to customize which root modules are included in the JRE.</div>
+            </>
+          }
+          <div>
+            <p className="text-sm italic">
+              Add any custom modules you'd like added to the set of root modules
+              included above. Comma-separate the values and don't use spaces.
+            </p>
+            <label htmlFor="additional-modules">Custom Modules: </label>
+            <input
+              id="additional-modules"
+              type="text"
+              value=""
+              placeholder="my.mod,other.mod,etc"
+              value={optionAdditionalModules}
+              className="shadow appearance-none border rounded py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+              onChange={this.handleAdditionalModulesChange.bind(this)}
+            />
+          </div>
+          <div>
+            <p className="text-sm italic">
+              The module path is a semicolon-separated list of paths where{" "}
+              <code className="font-mono roman border inline-block">jlink</code>{" "}
+              will search for modules. They can be relative or absolute, and can
+              use environment variables. If you run{" "}
+              <code className="font-mono roman border inline-block">jlink</code>{" "}
+              from{" "}
+              <code className="font-mono roman border inline-block">bin</code>,
+              then{" "}
+              <code className="font-mono roman border inline-block">..</code>{" "}
+              will resolve to the base JDK directory. JDK modules are typically
+              in the JDK directory{" "}
+              <code className="font-mono roman border inline-block">jmods</code>
+              .
+            </p>
+            <label htmlFor="module-path">Module Path: </label>
+            <input
+              id="module-path"
+              type="text"
+              value={optionModulePath}
+              className="shadow appearance-none border rounded py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+              onChange={this.handleModulePathChange.bind(this)}
+            />
+          </div>
+          <div>
+            <p className="text-sm italic">
+              Choose the level of compression. ZIP compression offers a
+              significant reduction in size with a small hit to class loading
+              performance.
+            </p>
+            <label
+              htmlFor="compression"
+              title="Enable compression of resources"
+            >
+              Compression:{" "}
+            </label>
+            <select
+              id="compression"
+              value={optionCompressionType}
+              title="Enable compression of resources"
+              className="rounded shadow border"
+              onChange={this.handleCompressionChange.bind(this)}
+            >
+              <option value="0">No compression</option>
+              <option value="1">Constant string sharing</option>
+              <option value="2">ZIP</option>
+            </select>
+          </div>
+          <div>
+            <p className="text-sm italic">
+              Whether or not to exclude header files from the JRE.
+            </p>
+            <label htmlFor="headers-excluded">Exclude Header Files </label>
+            <input
+              id="headers-excluded"
+              type="checkbox"
+              checked={optionExcludeHeaderFiles}
+              onChange={this.handleExcludeHeaderFilesChange.bind(this)}
+            />
+          </div>
+          <div>
+            <p className="text-sm italic">
+              Whether or not to exclude man pages from the JRE.
+            </p>
+            <label htmlFor="man-pages-excluded">Exclude Man Pages </label>
+            <input
+              id="man-pages-excluded"
+              type="checkbox"
+              checked={optionExcludeManPages}
+              onChange={this.handleExcludeManPagesChange.bind(this)}
+            />
+          </div>
+          <div>
+            <p className="text-sm italic">
+              Whether or not to link service provider modules and their
+              dependencies.
+            </p>
+            <label
+              htmlFor="bind-services"
+              title="Link service provider modules and their dependencies."
+            >
+              Bind Services{" "}
+            </label>
+            <input
+              id="bind-services"
+              type="checkbox"
+              title="Link service provider modules and their dependencies."
+              checked={optionBindServices}
+              onChange={this.handleBindServicesChange.bind(this)}
+            />
+          </div>
+          <div>
+            <p className="text-sm italic">
+              The path to the{" "}
+              <code className="font-mono roman border inline-block">bin</code>{" "}
+              folder of your JDK. You can use an environment variable here, but
+              it's safer to execute{" "}
+              <code className="font-mono roman border inline-block">jlink</code>{" "}
+              directly from the {selectedVendor.product} JDK{" "}
+              <code className="font-mono roman border inline-block">bin</code>{" "}
+              to prevent using an incorrect JDK that might be on your{" "}
+              <code className="font-mono roman border inline-block">PATH</code>.
+              The safest way is to leave this as{" "}
+              <code className="font-mono roman border inline-block">.</code>,
+              navigate to the{" "}
+              <code className="font-mono roman border inline-block">bin</code>{" "}
+              directory, and run the{" "}
+              <code className="font-mono roman border inline-block">jlink</code>{" "}
+              command copied from above. If you change this, be sure to also
+              change the Module Path above.
+            </p>
+            <label htmlFor="jdk-bin-path">JDK Bin Path: </label>
+            <input
+              id="jdk-bin-path"
+              type="text"
+              value={optionJdkBinPath}
+              className="shadow appearance-none border rounded py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+              onChange={this.handleJdkBinPathChange.bind(this)}
+            />
+          </div>
+        </div>
         <footer className="text-center py-4 mt-2 bg-grey-lighter text-sm">
           Copyright &copy; {new Date().getFullYear()}{" "}
           <a href="https://github.com/justinmahar">Justin Mahar</a> &bull;{" "}
           <a href="https://opensource.org/licenses/MIT">MIT License</a> &bull;{" "}
-          <a href="https://github.com/justinmahar/easyjre">EasyJRE on GitHub</a>
+          <a href="https://github.com/justinmahar/easyjre">EasyJRE on GitHub</a>{" "}
+          &bull; Coffee Icon By{" "}
+          <a href="https://feathericons.com/">FeatherIcons</a>
         </footer>
       </div>
     );

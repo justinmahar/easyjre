@@ -6,7 +6,7 @@ To get started, visit the following site:
 
 - https://justinmahar.github.io/easyjre/
 
-The project was created using React and is hosted on GitHub pages.
+The project was created using React and is hosted on GitHub pages. Coffee icon by [Feather](https://feathericons.com/).
 
 # Contributions
 
