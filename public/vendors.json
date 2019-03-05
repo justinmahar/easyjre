@@ -3,12 +3,12 @@
     {
       "organization": "Oracle",
       "product": "HotSpot",
-      "jdk_download_link": "https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=hotspot"
+      "jdk_download_link": "https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot"
     },
     {
       "organization": "IBM/Eclipse",
       "product": "OpenJ9",
-      "jdk_download_link": "https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=openj9"
+      "jdk_download_link": "https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=openj9"
     },
     {
       "organization": "Amazon",
