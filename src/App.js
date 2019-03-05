@@ -483,7 +483,7 @@ class App extends Component {
           <br />
           <ul className="list-reset">
             <li>
-              <h4>Select, download, and unpack your desired JDK:</h4>
+              <h4>Select, download, and unpack your desired JDK (9 or greater):</h4>
               <br />
               <select
                 onChange={this.handleProductChange.bind(this)}
@@ -966,7 +966,14 @@ class App extends Component {
               </p>
               <br />
               <p className="text-lg font-bold border-t pt-4 mt-4">
-                If this project helped you, please <a href="https://github.com/justinmahar/easyjre" className="text-blue no-underline hover:underline">Star it on GitHub</a> so others can find it. :)
+                If this project helped you, please{" "}
+                <a
+                  href="https://github.com/justinmahar/easyjre"
+                  className="text-blue no-underline hover:underline"
+                >
+                  Star it on GitHub
+                </a>{" "}
+                so others can find it. :)
               </p>
             </>
           )}
@@ -975,11 +982,33 @@ class App extends Component {
         </div>
         <footer className="text-center py-6 mt-2 bg-grey-darker text-white text-xs">
           Copyright &copy; {new Date().getFullYear()}{" "}
-          <a href="https://github.com/justinmahar" className="text-blue-lighter no-underline hover:underline">Justin Mahar</a> &bull;{" "}
-          <a href="https://opensource.org/licenses/MIT" className="text-blue-lighter no-underline hover:underline">MIT License</a> &bull;{" "}
-          <a href="https://github.com/justinmahar/easyjre" className="text-blue-lighter no-underline hover:underline">EasyJRE on GitHub</a>{" "}
+          <a
+            href="https://github.com/justinmahar"
+            className="text-blue-lighter no-underline hover:underline"
+          >
+            Justin Mahar
+          </a>{" "}
+          &bull;{" "}
+          <a
+            href="https://opensource.org/licenses/MIT"
+            className="text-blue-lighter no-underline hover:underline"
+          >
+            MIT License
+          </a>{" "}
+          &bull;{" "}
+          <a
+            href="https://github.com/justinmahar/easyjre"
+            className="text-blue-lighter no-underline hover:underline"
+          >
+            EasyJRE on GitHub
+          </a>{" "}
           &bull; Coffee Icon By{" "}
-          <a href="https://feathericons.com/" className="text-blue-lighter no-underline hover:underline">FeatherIcons</a>
+          <a
+            href="https://feathericons.com/"
+            className="text-blue-lighter no-underline hover:underline"
+          >
+            FeatherIcons
+          </a>
         </footer>
       </div>
     );
