@@ -16,9 +16,9 @@ You can also easily add new JDKs to the project. See below.
 
 ## Adding New JDKs
 
-For this project, JDK information is stored in the following file: `./src/json/vendors.json` ([view file](https://raw.githubusercontent.com/justinmahar/easyjre/master/src/json/vendors.json))
+For this project, JDK information is stored in the following file: `./public/vendors.json` ([view file](https://raw.githubusercontent.com/justinmahar/easyjre/master/public/vendors.json))
 
-Each vendor has an array of JDKs, each having a version, a JDK download link, a list of JDK modules to included by default, and a list of JDK modules excluded by default. You can get a list of all modules available for a particular JDK by running the command `java --list-modules`. This is how I determined which modules to include for each JDK available.
+Each vendor has an array of JDKs, each having a version, a JDK download link, a list of JDK modules to included by default, and a list of JDK modules excluded by default. You can get a list of all modules available for a particular JDK by running the command `java --list-modules`. This is how I determined which default JRE modules to include for each JDK available.
 
 If you'd like to add a new JDK, fork the project and send me a pull request.
 
@@ -36,13 +36,13 @@ Clone the project and run `npm install` to install the dependencies. Run `npm st
 
 Starts the development server.
 
-### `npm build`
+### `npm run build`
 
 Builds the React app to the `build` directory.
 
-### `npm deploy`
+### `npm run deploy`
 
-Deploys the built project in the `build` directory to the GitHub pages site `homepage` specified in `package.json`. The script uses the `gh-pages` dependency to do all the heavy lifting.
+Deploys the built project in the `build` directory to the GitHub pages site `homepage` specified in `package.json`. The script uses the `gh-pages` dependency to do all the heavy lifting. Make sure you `npm run build` before deploying.
 
 # License 
 
