@@ -369,19 +369,34 @@ class App extends Component {
             </a>
           </div>
           <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-            <div className="text-sm lg:flex-grow" />
-            <div>
+            <div className="text-sm lg:flex-grow">
               <a
                 href="/"
                 className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 no-underline hover:underline"
               >
                 Home
               </a>
+            </div>
+            <div className="mt-4 lg:mt-0">
               <a
-                href="https://github.com/justinmahar/easyjre"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 no-underline hover:underline"
+                className="block lg:inline-block lg:mt-0 mr-4 github-button"
+                href="https://github.com/justinmahar/easyjre/fork"
+                data-icon="octicon-repo-forked"
+                data-size="large"
+                data-show-count="false"
+                aria-label="Fork justinmahar/easyjre on GitHub"
               >
-                GitHub
+                Fork
+              </a>{" "}
+              <a
+                className="block lg:inline-block lg:mt-0 mr-4 github-button"
+                href="https://github.com/justinmahar/easyjre"
+                data-icon="octicon-star"
+                data-size="large"
+                data-show-count="true"
+                aria-label="Star justinmahar/easyjre on GitHub"
+              >
+                Star
               </a>
             </div>
           </div>
@@ -402,7 +417,10 @@ class App extends Component {
                 checked={userNeeds === "need-quick"}
                 onChange={this.handleUserNeedsChange.bind(this)}
               />{" "}
-              <label htmlFor="need-quick" className="text-sm font-bold text-black">
+              <label
+                htmlFor="need-quick"
+                className="text-sm font-bold text-black"
+              >
                 I just want a lightweight (~40-60 MB) standard Java SE JRE for a
                 particular JDK. Quick and painless.
               </label>
@@ -417,7 +435,10 @@ class App extends Component {
                 checked={userNeeds === "need-list"}
                 onChange={this.handleUserNeedsChange.bind(this)}
               />{" "}
-              <label htmlFor="need-list" className="text-sm font-bold text-black">
+              <label
+                htmlFor="need-list"
+                className="text-sm font-bold text-black"
+              >
                 Let me pick and choose from a list which JDK modules are
                 included in my JRE.
               </label>
@@ -432,7 +453,10 @@ class App extends Component {
                 checked={userNeeds === "need-custom"}
                 onChange={this.handleUserNeedsChange.bind(this)}
               />{" "}
-              <label htmlFor="need-custom" className="text-sm font-bold text-black">
+              <label
+                htmlFor="need-custom"
+                className="text-sm font-bold text-black"
+              >
                 I know exactly which modules I need to include in my JRE. I
                 don't need to see a list.
               </label>
@@ -447,7 +471,10 @@ class App extends Component {
                 checked={userNeeds === "need-control"}
                 onChange={this.handleUserNeedsChange.bind(this)}
               />{" "}
-              <label htmlFor="need-control" className="text-sm font-bold text-black">
+              <label
+                htmlFor="need-control"
+                className="text-sm font-bold text-black"
+              >
                 I want total control. Show me all the options!
               </label>
             </li>
@@ -887,58 +914,72 @@ class App extends Component {
               )}
             </>
           )}
-          <br />
-          <h4>
-            Copy the{" "}
-            <code className="font-mono roman border inline-block">jlink</code>{" "}
-            command below and run it in the{" "}
-            <code className="font-mono roman border inline-block">bin</code>{" "}
-            directory of the JDK:
-          </h4>
-          <br />
-          <div>
-            <textarea
-              id="jlink-command-textarea"
-              value={jlinkCommand}
-              readOnly
-              cols="80"
-              rows="8"
-              className="rounded shadow border font-mono text-xs"
-              onClick={this.handleJlinkCommandTextareaClick}
-            />
-          </div>
-          <div>
-            <button
-              onClick={this.handleCopyButtonClick.bind(this)}
-              className="no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
-            >
-              Copy
-            </button>
-          </div>
-          <br />
-          <br />
-          <h3>
-            Your JRE will be created in the{" "}
-            <code className="font-mono roman border inline-block">
-              {jreFolderName}
-            </code>{" "}
-            folder of your current working directory!
-          </h3>
-          <br />
-          <p className="text-sm italic">
-            If not, be sure you are running this command with the correct
-            privileges!
-          </p>
+          {((userNeeds === "need-quick" && !!jdkVersion) ||
+            (userNeeds === "need-custom" && !!optionAdditionalModules) ||
+            (userNeeds === "need-list" &&
+              (!!jdkVersion || !!optionAdditionalModules)) ||
+            userNeeds === "need-control") && (
+            <>
+              <br />
+              <h4>
+                Copy the{" "}
+                <code className="font-mono roman border inline-block">
+                  jlink
+                </code>{" "}
+                command below and run it in the{" "}
+                <code className="font-mono roman border inline-block">bin</code>{" "}
+                directory of the JDK:
+              </h4>
+              <br />
+              <div>
+                <textarea
+                  id="jlink-command-textarea"
+                  value={jlinkCommand}
+                  readOnly
+                  cols="80"
+                  rows="8"
+                  className="rounded shadow border font-mono text-xs"
+                  onClick={this.handleJlinkCommandTextareaClick}
+                />
+              </div>
+              <div>
+                <button
+                  onClick={this.handleCopyButtonClick.bind(this)}
+                  className="no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
+                >
+                  Copy
+                </button>
+              </div>
+              <br />
+              <br />
+              <h3>
+                Your JRE will be created in the{" "}
+                <code className="font-mono roman border inline-block">
+                  {jreFolderName}
+                </code>{" "}
+                folder of your current working directory!
+              </h3>
+              <br />
+              <p className="text-sm italic">
+                If not, be sure you are running this command with the correct
+                privileges!
+              </p>
+              <br />
+              <p className="text-lg font-bold border-t pt-4 mt-4">
+                If this project helped you, please <a href="https://github.com/justinmahar/easyjre" className="text-blue no-underline hover:underline">Star it on GitHub</a> so others can find it. :)
+              </p>
+            </>
+          )}
           <br />
           <br />
         </div>
-        <footer className="text-center py-4 mt-2 bg-grey-lighter text-sm">
+        <footer className="text-center py-6 mt-2 bg-grey-darker text-white text-xs">
           Copyright &copy; {new Date().getFullYear()}{" "}
-          <a href="https://github.com/justinmahar">Justin Mahar</a> &bull;{" "}
-          <a href="https://opensource.org/licenses/MIT">MIT License</a> &bull;{" "}
-          <a href="https://github.com/justinmahar/easyjre">EasyJRE on GitHub</a>{" "}
+          <a href="https://github.com/justinmahar" className="text-blue-lighter no-underline hover:underline">Justin Mahar</a> &bull;{" "}
+          <a href="https://opensource.org/licenses/MIT" className="text-blue-lighter no-underline hover:underline">MIT License</a> &bull;{" "}
+          <a href="https://github.com/justinmahar/easyjre" className="text-blue-lighter no-underline hover:underline">EasyJRE on GitHub</a>{" "}
           &bull; Coffee Icon By{" "}
-          <a href="https://feathericons.com/">FeatherIcons</a>
+          <a href="https://feathericons.com/" className="text-blue-lighter no-underline hover:underline">FeatherIcons</a>
         </footer>
       </div>
     );

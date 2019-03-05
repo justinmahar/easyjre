@@ -1,6 +1,6 @@
 # Easy JRE
 
-This tool allows you to easily create a custom OpenJDK JRE using `jlink`!
+This tool allows you to easily create a custom OpenJDK JRE using `jlink`.
 
 To get started, visit the following site:
 
