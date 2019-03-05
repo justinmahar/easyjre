@@ -12,15 +12,13 @@ The project was created using React and is hosted on GitHub pages. Coffee icon b
 
 If you'd like the contribute to the project, feel free to send a pull request. 
 
-You can also easily add new JDKs to the project. See below.
+You can also easily add new JDK vendors to the project. See below.
 
-## Adding New JDKs
+## Adding New JDK Vendors
 
 For this project, JDK information is stored in the following file: `public/vendors.json` ([view file](https://github.com/justinmahar/easyjre/blob/master/public/vendors.json))
 
-Each vendor has an array of JDKs, each having a version, a JDK download link, a list of JDK modules to included by default, and a list of JDK modules excluded by default. You can get a list of all modules available for a particular JDK by running the command `java --list-modules`. This is how I determined which default JRE modules to include for each JDK available.
-
-If you'd like to add a new JDK, fork the project and send me a pull request.
+If you'd like to add a new vendor, fork the project and send me a pull request.
 
 Happy JRE building!
 
