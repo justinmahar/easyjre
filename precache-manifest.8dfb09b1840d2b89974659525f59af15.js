@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/easyjre/static/js/runtime~main.254c89cb.js"
   },
   {
-    "revision": "943876751c65434a68ae",
-    "url": "/easyjre/static/js/main.94387675.chunk.js"
+    "revision": "873e1cfcd1aabe27df97",
+    "url": "/easyjre/static/js/main.873e1cfc.chunk.js"
   },
   {
     "revision": "66cabc593232c95ee3e1",
     "url": "/easyjre/static/js/2.66cabc59.chunk.js"
   },
   {
-    "revision": "943876751c65434a68ae",
+    "revision": "873e1cfcd1aabe27df97",
     "url": "/easyjre/static/css/main.ddcd6165.chunk.css"
   },
   {
-    "revision": "96fb2721af5afec7965519c25d5eedd1",
+    "revision": "9c552fba6d03da9d4bdaf89f43aaf867",
     "url": "/easyjre/index.html"
   }
 ];
