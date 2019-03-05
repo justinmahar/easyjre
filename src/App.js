@@ -439,7 +439,7 @@ class App extends Component {
             and standard JREs are no longer bundled with Java JDKs.
             <br />
             <br />
-            Worry not. You can use this tool to easily create a JRE from any JDK!
+            You can use this tool to easily create a JRE from any JDK. 🔥
           </h3>
           <h2>What do you need?</h2>
           <ul className="list-reset m-4 border border-grey md:w-3/5 mx-auto p-10 shadow-md bg-blue-lightest">
