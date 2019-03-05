@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/easyjre/static/css/main.ddcd6165.chunk.css"
   },
   {
-    "revision": "5648389f329b76d0e1964836cf4a29ab",
+    "revision": "96fb2721af5afec7965519c25d5eedd1",
     "url": "/easyjre/index.html"
   }
 ];
