@@ -431,10 +431,16 @@ class App extends Component {
           </div>
         </nav>
         <div className="text-center container mx-auto px-4">
-          <h1 className="py-12">
+          <h1 className="py-16 pb-6">
             Use EasyJRE to create an OpenJDK JRE easily with <code>jlink</code>!
           </h1>
-
+          <h3 className="pt-6 pb-12 w-1/2 mx-auto">
+            Starting with JDK 9 and up, Java classes are packaged into modules,
+            and standard JREs are no longer bundled with Java JDKs.
+            <br />
+            <br />
+            Worry not. You can use this tool to easily create a JRE from any JDK!
+          </h3>
           <h2>What do you need?</h2>
           <ul className="list-reset m-4 border border-grey md:w-3/5 mx-auto p-10 shadow-md bg-blue-lightest">
             <li>
