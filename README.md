@@ -16,7 +16,7 @@ You can also easily add new JDKs to the project. See below.
 
 ## Adding New JDKs
 
-For this project, JDK information is stored in the following file: `./public/vendors.json` ([view file](https://raw.githubusercontent.com/justinmahar/easyjre/master/public/vendors.json))
+For this project, JDK information is stored in the following file: `public/vendors.json` ([view file](https://github.com/justinmahar/easyjre/blob/master/public/vendors.json))
 
 Each vendor has an array of JDKs, each having a version, a JDK download link, a list of JDK modules to included by default, and a list of JDK modules excluded by default. You can get a list of all modules available for a particular JDK by running the command `java --list-modules`. This is how I determined which default JRE modules to include for each JDK available.
 
