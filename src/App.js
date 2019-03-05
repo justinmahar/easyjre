@@ -187,13 +187,24 @@ class App extends Component {
           jreExcludedModules: newJreExcludedModules,
           jdkVersion: jdkVersion.trim()
         });
-
-        console.log("strippedModules: ", strippedModules);
-        console.log("jdkVersion: ", jdkVersion.trim());
       })
       .catch(err => {
         console.error("Failed to read clipboard contents: ", err);
       });
+  }
+
+  handleClickCopyWindowsListModulesCommand(event) {
+    let commandTextarea = document.getElementById("windows-list-command");
+    commandTextarea.select();
+    document.execCommand("copy");
+    event.preventDefault();
+  }
+
+  handleClickCopyLinuxListModulesCommand(event) {
+    let commandTextarea = document.getElementById("linux-list-command");
+    commandTextarea.select();
+    document.execCommand("copy");
+    event.preventDefault();
   }
 
   render() {
@@ -268,16 +279,14 @@ class App extends Component {
       excludedModulesOptionArray.push(currModuleOption);
     });
 
-    let productName =
-      selectedVendor.organization + " " + selectedVendor.product;
+    let jreName = "jre";
 
     let jdkVersion = this.state.jdkVersion;
     if (jdkVersion != "") {
-      productName += " " + jdkVersion;
+      jreName += "-" + jdkVersion;
     }
 
-    let jreFolderName =
-      "jre" + "-" + productName.toLowerCase().replace(/[^a-z0-9.]/g, "-");
+    let jreFolderName = jreName.toLowerCase().replace(/[^a-z0-9.]/g, "-");
 
     let outputCommandString = "--output " + jreFolderName;
 
@@ -298,7 +307,7 @@ class App extends Component {
 
     let excludeManPagesOptionString = "";
     if (optionExcludeManPages) {
-      excludeManPagesOptionString = " --no-header-files";
+      excludeManPagesOptionString = " --no-man-pages";
     }
 
     let bindServicesOptionString = "";
@@ -384,136 +393,188 @@ class App extends Component {
             </div>
           </div>
         </nav>
-        <div className="text-center">
+        <div className="text-center container mx-auto px-4">
+          <br />
           <h1>EasyJRE: The Easiest Way To Create An OpenJDK JRE for Java!</h1>
-          <h3>Select your JDK:</h3>
-          <select
-            onChange={this.handleProductChange.bind(this)}
-            className="rounded shadow border"
-          >
-            {productOptionArray}
-          </select>
-          <a
-            href={downloadJDKHref}
-            target="_new"
-            className="inline-block no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
-          >
-            Download JDK &raquo;
-          </a>
-          <h3>Four easy steps:</h3>
-          <ol className="list-reset">
+          <br />
+
+          <h3>Five easy steps:</h3>
+          <br />
+          <ul className="list-reset">
             <li>
-              1. Download and unpack{" "}
-              <a href={downloadJDKHref} target="_new">
-                {selectedVendor.organization} {selectedVendor.product} JDK
+              <h4>1. Select, download, and unpack your desired JDK:</h4>
+              <br />
+              <select
+                onChange={this.handleProductChange.bind(this)}
+                className="rounded shadow border"
+              >
+                {productOptionArray}
+              </select>{" "}
+              <a
+                href={downloadJDKHref}
+                target="_new"
+                className="inline-block no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
+              >
+                Download JDK &raquo;
               </a>
             </li>
+            <br />
             <li>
-              <p>
-                2. Copy a list of the available JDK modules using the following
-                command <strong>in the JDK bin folder</strong>:
-              </p>
+              <h4>
+                2. Copy a list of the available JDK modules by running the
+                following command{" "}
+                <span className="underline">in the JDK bin folder</span>:
+              </h4>
+          <br />
+          <p className="text-sm italic">
+            If you just need a general Java SE JRE for the JDK selected above, complete Steps 2 and 3.
+          </p>
+          <br />
+          <p className="text-sm italic">
+            If you plan to manually specify your JDK modules, you can skip this section and go to Step 4.
+          </p>
+              <br />
               <ul className="list-reset">
                 <li>
                   Windows:{" "}
-                  <code className="font-mono roman border inline-block">
-                    .\java --list-modules | clip
-                  </code>
+                  <input
+                    type="text"
+                    className="font-mono roman border inline-block w-1/4"
+                    id="windows-list-command"
+                    value=".\java --list-modules | clip"
+                    readOnly
+                  />{" "}
+                  <button
+                    className="inline-block border bg-grey-lighter p-1"
+                    onClick={this.handleClickCopyWindowsListModulesCommand.bind(
+                      this
+                    )}
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 20 20"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        stroke="none"
+                        strokeWidth="1"
+                        fill="#000000"
+                        fillRule="evenodd"
+                      >
+                        <g id="icon-shape">
+                          <path d="M12.9728369,2.59456737 C12.7749064,1.12946324 11.5193533,0 10,0 C8.48064666,0 7.2250936,1.12946324 7.02716314,2.59456737 L5,3 L5,4 L3.99406028,4 C2.89451376,4 2,4.8927712 2,5.99406028 L2,18.0059397 C2,19.1054862 2.8927712,20 3.99406028,20 L16.0059397,20 C17.1054862,20 18,19.1072288 18,18.0059397 L18,5.99406028 C18,4.89451376 17.1072288,4 16.0059397,4 L15,4 L15,3 L12.9728369,2.59456737 Z M5,6 L4,6 L4,18 L16,18 L16,6 L15,6 L15,7 L5,7 L5,6 Z M10,4 C10.5522847,4 11,3.55228475 11,3 C11,2.44771525 10.5522847,2 10,2 C9.44771525,2 9,2.44771525 9,3 C9,3.55228475 9.44771525,4 10,4 Z" />
+                        </g>
+                      </g>
+                    </svg>
+                  </button>
                 </li>
                 <li>
                   Linux/OSX:{" "}
-                  <code className="font-mono roman border inline-block">
-                    ./java --list-modules | pbcopy
-                  </code>
+                  <input
+                    type="text"
+                    className="font-mono roman border inline-block w-1/4"
+                    id="linux-list-command"
+                    value="./java --list-modules | pbcopy"
+                    readOnly
+                  />{" "}
+                  <button
+                    className="inline-block border bg-grey-lighter p-1"
+                    onClick={this.handleClickCopyLinuxListModulesCommand.bind(
+                      this
+                    )}
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 20 20"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        stroke="none"
+                        strokeWidth="1"
+                        fill="#000000"
+                        fillRule="evenodd"
+                      >
+                        <g id="icon-shape">
+                          <path d="M12.9728369,2.59456737 C12.7749064,1.12946324 11.5193533,0 10,0 C8.48064666,0 7.2250936,1.12946324 7.02716314,2.59456737 L5,3 L5,4 L3.99406028,4 C2.89451376,4 2,4.8927712 2,5.99406028 L2,18.0059397 C2,19.1054862 2.8927712,20 3.99406028,20 L16.0059397,20 C17.1054862,20 18,19.1072288 18,18.0059397 L18,5.99406028 C18,4.89451376 17.1072288,4 16.0059397,4 L15,4 L15,3 L12.9728369,2.59456737 Z M5,6 L4,6 L4,18 L16,18 L16,6 L15,6 L15,7 L5,7 L5,6 Z M10,4 C10.5522847,4 11,3.55228475 11,3 C11,2.44771525 10.5522847,2 10,2 C9.44771525,2 9,2.44771525 9,3 C9,3.55228475 9.44771525,4 10,4 Z" />
+                        </g>
+                      </g>
+                    </svg>
+                  </button>
+                  <button />
                 </li>
               </ul>
             </li>
+            <br />
             <li>
+              <h4>3. Paste the modules here: </h4>
+              <br />
+              <div>
+                <p>
+                  <button
+                    className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                    onClick={this.handlePasteClick.bind(this)}
+                  >
+                    Paste
+                  </button>
+                </p>
+              </div>
               <p>
-                3. Paste the modules here:{" "}
-                <button
-                  className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-                  onClick={this.handlePasteClick.bind(this)}
-                >
-                  Paste
-                </button>
-                {jdkVersion &&
-                <span className="text-xs text-green font-bold">{" "}JDK {jdkVersion} ✓</span>}
+                {jdkVersion && (
+                  <span className="text-xs text-green font-bold">
+                    {" "}
+                    JDK {jdkVersion} ✓
+                  </span>
+                )}
               </p>
             </li>
-            <li>
-              <p>
-                4.{" "}
-                <a href="#0" onClick={this.handleCopyButtonClick.bind(this)}>
-                  Copy
-                </a>{" "}
-                the below{" "}
-                <code className="font-mono roman border inline-block">
-                  jlink
-                </code>{" "}
-                command and run it in the{" "}
-                <code className="font-mono roman border inline-block">bin</code>{" "}
-                directory of the JDK
-              </p>
-              <h3>
-                Create your{" "}
-                {selectedVendor.organization + " " + selectedVendor.product}{" "}
-                OpenJDK JRE using the{" "}
-                <code className="font-mono roman border inline-block">
-                  jlink
-                </code>{" "}
-                command below:
-              </h3>
-              <textarea
-                id="jlink-command-textarea"
-                value={jlinkCommand}
-                readOnly
-                cols="80"
-                rows="8"
-                className="rounded shadow border font-mono text-xs"
-                onClick={this.handleJlinkCommandTextareaClick}
-              />
-              <button
-                onClick={this.handleCopyButtonClick.bind(this)}
-                className="no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
-              >
-                Copy
-              </button>
-            </li>
-            <li>
-              Your JRE is in the{" "}
-              <code className="font-mono roman border inline-block">
-                {jreFolderName}
-              </code>{" "}
-              folder of your current working directory!
-            </li>
-          </ol>
-          <h3>
-            Customize Your{" "}
+          </ul>
+          <br />
+          <h4>
+            4. Customize Your{" "}
             {selectedVendor.organization + " " + selectedVendor.product} JRE
-          </h3>
+          </h4>
+          <br />
           <p className="text-sm italic">
-            The JDK comes with many root modules which contain the JDK core
-            classes. The modules prefixed with{" "}
-            <code className="font-mono roman border inline-block">jdk.</code>{" "}
-            are typically not needed for a production JRE. Below, all non-JDK
-            modules have been included in the JRE. This will get you up and
-            running quickly without needing to use an entire JDK.
+            If you just need a general Java SE JRE for the JDK selected above, you can skip this and go to Step 5.
           </p>
-          <p className="text-sm italic">
-            Free to exclude or include any modules you might need. For instance,
-            you can use the{" "}
-            <code className="font-mono roman border inline-block">jdeps</code>{" "}
-            command on your Java classes to narrow down which modules you
-            actually need to include.
-          </p>
-          <p className="text-sm italic">
-            There is another section below for adding your own custom modules to
-            the JRE.
-          </p>
+          <br />
+          <h5>JDK Root Modules</h5>
+          <br />
           {jdkVersion !== "" && (
             <>
+              <p className="text-sm italic">
+                The JDK comes with many root modules which contain the JDK core
+                classes. The modules prefixed with{" "}
+                <code className="font-mono roman border inline-block">
+                  jdk.
+                </code>{" "}
+                are typically not needed for a production JRE. Below, all
+                non-JDK modules have been included in the JRE. This will get you
+                up and running quickly without needing to use an entire JDK.
+              </p>
+              <br />
+              <p className="text-sm italic">
+                Free to exclude or include any modules you might need. For
+                instance, you can use the{" "}
+                <code className="font-mono roman border inline-block">
+                  jdeps
+                </code>{" "}
+                command on your Java classes to narrow down which modules you
+                actually need to include.
+              </p>
+              <br />
+              <p className="text-sm italic">
+                There is another section below for adding additional modules
+                (such as custom ones, or manually specifying JDK ones) to the
+                JRE.
+              </p>
+              <br />
               <h4>Included JDK Root Modules:</h4>
+              <br />
               <div>
                 <select
                   id="jre-included-modules"
@@ -522,6 +583,8 @@ class App extends Component {
                 >
                   {includedModulesOptionArray}
                 </select>
+                <br />
+                <br />
                 <button
                   className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
                   onClick={this.handleExcludeClick.bind(this)}
@@ -529,7 +592,9 @@ class App extends Component {
                   Exclude &darr;
                 </button>
               </div>
+              <br />
               <h4>Excluded JDK Root Modules:</h4>
+              <br />
               <div>
                 <select
                   id="jre-excluded-modules"
@@ -538,6 +603,8 @@ class App extends Component {
                 >
                   {excludedModulesOptionArray}
                 </select>
+                <br />
+                <br />
                 <button
                   className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
                   onClick={this.handleIncludeClick.bind(this)}
@@ -547,17 +614,35 @@ class App extends Component {
               </div>
             </>
           )}
-          {!jdkVersion &&
+          {!jdkVersion && (
             <>
-            <div className="font-bold border p-1 inline-block">Please paste your JDK modules above to customize which root modules are included in the JRE.</div>
+              <div className="font-bold border p-1 inline-block text-red">
+                Please paste your JDK modules above to customize which root
+                modules are included in the JRE. Ignore this if you'd like to
+                add them manually below.
+              </div>
             </>
-          }
+          )}
+          <br />
+          <br />
+          <h5>Additional Modules</h5>
+          <br />
           <div>
             <p className="text-sm italic">
-              Add any custom modules you'd like added to the set of root modules
-              included above. Comma-separate the values and don't use spaces.
+              Specify any modules you'd like added in addition to the set of
+              root modules included above, such as your custom ones.
+              Comma-separate the values and don't use spaces.
             </p>
-            <label htmlFor="additional-modules">Custom Modules: </label>
+            <br />
+            <p className="text-sm italic">
+              You can specify root JDK modules (such as{" "}
+              <code className="font-mono roman border inline-block">
+                java.base
+              </code>
+              ) here manually if you'd like.
+            </p>
+            <br />
+            <label htmlFor="additional-modules">Additional Modules: </label>
             <input
               id="additional-modules"
               type="text"
@@ -568,22 +653,29 @@ class App extends Component {
               onChange={this.handleAdditionalModulesChange.bind(this)}
             />
           </div>
+          <br />
+          <h5>Module Path</h5>
+          <br />
           <div>
             <p className="text-sm italic">
               The module path is a semicolon-separated list of paths where{" "}
               <code className="font-mono roman border inline-block">jlink</code>{" "}
               will search for modules. They can be relative or absolute, and can
-              use environment variables. If you run{" "}
+              use environment variables. JDK modules are typically in the JDK
+              directory{" "}
+              <code className="font-mono roman border inline-block">jmods</code>
+              . If you run{" "}
               <code className="font-mono roman border inline-block">jlink</code>{" "}
               from{" "}
               <code className="font-mono roman border inline-block">bin</code>,
               then{" "}
-              <code className="font-mono roman border inline-block">..</code>{" "}
-              will resolve to the base JDK directory. JDK modules are typically
-              in the JDK directory{" "}
-              <code className="font-mono roman border inline-block">jmods</code>
-              .
+              <code className="font-mono roman border inline-block">
+                ../jmods
+              </code>{" "}
+              will work just fine. You can optionally add your own module paths
+              after that, separated by a semicolon.
             </p>
+            <br />
             <label htmlFor="module-path">Module Path: </label>
             <input
               id="module-path"
@@ -593,12 +685,16 @@ class App extends Component {
               onChange={this.handleModulePathChange.bind(this)}
             />
           </div>
+          <br />
+          <h5>Other Options</h5>
+          <br />
           <div>
             <p className="text-sm italic">
               Choose the level of compression. ZIP compression offers a
               significant reduction in size with a small hit to class loading
               performance.
             </p>
+            <br />
             <label
               htmlFor="compression"
               title="Enable compression of resources"
@@ -617,10 +713,12 @@ class App extends Component {
               <option value="2">ZIP</option>
             </select>
           </div>
+          <br />
           <div>
             <p className="text-sm italic">
               Whether or not to exclude header files from the JRE.
             </p>
+            <br />
             <label htmlFor="headers-excluded">Exclude Header Files </label>
             <input
               id="headers-excluded"
@@ -629,10 +727,12 @@ class App extends Component {
               onChange={this.handleExcludeHeaderFilesChange.bind(this)}
             />
           </div>
+          <br />
           <div>
             <p className="text-sm italic">
               Whether or not to exclude man pages from the JRE.
             </p>
+            <br />
             <label htmlFor="man-pages-excluded">Exclude Man Pages </label>
             <input
               id="man-pages-excluded"
@@ -641,11 +741,13 @@ class App extends Component {
               onChange={this.handleExcludeManPagesChange.bind(this)}
             />
           </div>
+          <br />
           <div>
             <p className="text-sm italic">
               Whether or not to link service provider modules and their
               dependencies.
             </p>
+            <br />
             <label
               htmlFor="bind-services"
               title="Link service provider modules and their dependencies."
@@ -660,9 +762,12 @@ class App extends Component {
               onChange={this.handleBindServicesChange.bind(this)}
             />
           </div>
+          <br />
+          <h5>JDK Bin Path</h5>
+          <br />
           <div>
             <p className="text-sm italic">
-              The path to the{" "}
+              Specify the path to the{" "}
               <code className="font-mono roman border inline-block">bin</code>{" "}
               folder of your JDK. You can use an environment variable here, but
               it's safer to execute{" "}
@@ -677,9 +782,10 @@ class App extends Component {
               <code className="font-mono roman border inline-block">bin</code>{" "}
               directory, and run the{" "}
               <code className="font-mono roman border inline-block">jlink</code>{" "}
-              command copied from above. If you change this, be sure to also
+              command copied from below. If you change this, be sure to also
               change the Module Path above.
             </p>
+            <br />
             <label htmlFor="jdk-bin-path">JDK Bin Path: </label>
             <input
               id="jdk-bin-path"
@@ -689,6 +795,45 @@ class App extends Component {
               onChange={this.handleJdkBinPathChange.bind(this)}
             />
           </div>
+          <br />
+          <h4>
+            5. Copy the{" "}
+            <code className="font-mono roman border inline-block">jlink</code>{" "}
+            command below and run it in the{" "}
+            <code className="font-mono roman border inline-block">bin</code>{" "}
+            directory of the JDK:
+          </h4>
+          <br />
+          <div>
+            <textarea
+              id="jlink-command-textarea"
+              value={jlinkCommand}
+              readOnly
+              cols="80"
+              rows="8"
+              className="rounded shadow border font-mono text-xs"
+              onClick={this.handleJlinkCommandTextareaClick}
+            />
+          </div>
+          <div>
+            <button
+              onClick={this.handleCopyButtonClick.bind(this)}
+              className="no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
+            >
+              Copy
+            </button>
+          </div>
+          <br />
+          <br />
+          <h3>
+            Your JRE will be created in the{" "}
+            <code className="font-mono roman border inline-block">
+              {jreFolderName}
+            </code>{" "}
+            folder of your current working directory!
+          </h3>
+          <br />
+          <br />
         </div>
         <footer className="text-center py-4 mt-2 bg-grey-lighter text-sm">
           Copyright &copy; {new Date().getFullYear()}{" "}
