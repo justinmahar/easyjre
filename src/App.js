@@ -22,6 +22,8 @@ class App extends Component {
     let jreIncludedModules = [];
     let jreExcludedModules = [];
 
+    let clipboardSupported = typeof navigator.clipboard.readText === "function";
+
     this.state = {
       vendors: vendors.vendors,
       userNeeds: "need-quick",
@@ -35,7 +37,8 @@ class App extends Component {
       jdkVersion: "",
       optionJdkBinPath: ".",
       optionModulePath: "../jmods",
-      optionAdditionalModules: ""
+      optionAdditionalModules: "",
+      clipboardSupported: clipboardSupported
     };
   }
 
@@ -229,6 +232,29 @@ class App extends Component {
       productOptionArray.push(currOption);
     });
 
+    let clipboardSupported = this.state.clipboardSupported;
+
+    if (!clipboardSupported) {
+      return (
+        <div className="text-center container mx-auto px-4">
+          <h1 className="py-12">
+            Your browser is not supported. Please use{" "}
+            <a
+              href="https://www.google.com/chrome"
+              className="no-underline inline-block text-blue"
+            >
+              Google Chrome
+            </a>
+            .
+          </h1>
+          <p>
+            Specifically, your browser doesn't support{" "}
+            <code>navigator.clipboard.readText</code>.
+          </p>
+        </div>
+      );
+    }
+
     let selectedVendor = this.state.vendors[this.state.selectedVendorIndex];
 
     let downloadJDKHref = selectedVendor["jdk_download_link"];
@@ -362,7 +388,10 @@ class App extends Component {
               <line x1="10" y1="1" x2="10" y2="4" />
               <line x1="14" y1="1" x2="14" y2="4" />
             </svg>
-            <a href="https://justinmahar.github.io/easyjre/" className="no-underline inline-block text-white">
+            <a
+              href="https://justinmahar.github.io/easyjre/"
+              className="no-underline inline-block text-white"
+            >
               <span className="font-semibold text-xl tracking-tight">
                 EasyJRE
               </span>
@@ -483,7 +512,9 @@ class App extends Component {
           <br />
           <ul className="list-reset">
             <li>
-              <h4>Select, download, and unpack your desired JDK (9 or greater):</h4>
+              <h4>
+                Select, download, and unpack your desired JDK (9 or greater):
+              </h4>
               <br />
               <select
                 onChange={this.handleProductChange.bind(this)}
@@ -548,7 +579,7 @@ class App extends Component {
                       </button>
                     </li>
                     <li>
-                      Linux/OSX:{" "}
+                      macOS:{" "}
                       <input
                         type="text"
                         className="font-mono roman border inline-block w-1/4"
