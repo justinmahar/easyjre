@@ -362,7 +362,7 @@ class App extends Component {
               <line x1="10" y1="1" x2="10" y2="4" />
               <line x1="14" y1="1" x2="14" y2="4" />
             </svg>
-            <a href="/" className="no-underline inline-block text-white">
+            <a href="https://justinmahar.github.io/easyjre/" className="no-underline inline-block text-white">
               <span className="font-semibold text-xl tracking-tight">
                 EasyJRE
               </span>
@@ -371,7 +371,7 @@ class App extends Component {
           <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
             <div className="text-sm lg:flex-grow">
               <a
-                href="/"
+                href="https://justinmahar.github.io/easyjre/"
                 className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 no-underline hover:underline"
               >
                 Home
