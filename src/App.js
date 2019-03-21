@@ -27,6 +27,7 @@ class App extends Component {
     this.state = {
       vendors: vendors.vendors,
       userNeeds: "need-quick",
+      platform: "mac-os",
       selectedVendorIndex: selectedVendorIndex,
       jreIncludedModules: jreIncludedModules,
       jreExcludedModules: jreExcludedModules,
@@ -42,6 +43,14 @@ class App extends Component {
     };
   }
 
+  handlePlatformChange(event) {
+    let selectedPlatform = event.target.value;
+
+    this.setState({
+      platform: selectedPlatform
+    });
+  }
+
   handleProductChange(event) {
     let selectedVendorIndex = event.target.value;
 
@@ -50,8 +59,8 @@ class App extends Component {
     });
   }
 
-  handleCopyButtonClick(event) {
-    let commandTextarea = document.getElementById("jlink-command-textarea");
+  handleCopyButtonClick(elementId, event) {
+    let commandTextarea = document.getElementById(elementId);
     commandTextarea.select();
     document.execCommand("copy");
     event.preventDefault();
@@ -196,15 +205,8 @@ class App extends Component {
       });
   }
 
-  handleClickCopyWindowsListModulesCommand(event) {
-    let commandTextarea = document.getElementById("windows-list-command");
-    commandTextarea.select();
-    document.execCommand("copy");
-    event.preventDefault();
-  }
-
-  handleClickCopyLinuxListModulesCommand(event) {
-    let commandTextarea = document.getElementById("linux-list-command");
+  handleClickCopyListModulesCommand(elementId, event) {
+    let commandTextarea = document.getElementById(elementId);
     commandTextarea.select();
     document.execCommand("copy");
     event.preventDefault();
@@ -219,6 +221,7 @@ class App extends Component {
 
   render() {
     let userNeeds = this.state.userNeeds;
+    let platform = this.state.platform;
 
     let productOptionArray = [];
 
@@ -355,7 +358,18 @@ class App extends Component {
       modulePathOptionString = " --module-path " + optionModulePath;
     }
 
-    let jlinkCommand =
+    let windowsJlinkCommand =
+      optionJdkBinPath +
+      "\\jlink " +
+      outputCommandString +
+      compressionOptionString +
+      excludeHeaderFilesOptionString +
+      excludeManPagesOptionString +
+      bindServicesOptionString +
+      modulePathOptionString +
+      moduleString;
+
+    let linuxJlinkCommand =
       optionJdkBinPath +
       "/jlink " +
       outputCommandString +
@@ -539,6 +553,79 @@ class App extends Component {
               <br />
             </li>
             <br />
+            <li>
+              <h4>Which platform?</h4>
+              <ul className="list-reset m-4 md:w-3/5 mx-auto p-4">
+                <li>
+                  <input
+                    type="radio"
+                    name="platform"
+                    id="platform-mac-os"
+                    value="mac-os"
+                    checked={platform === "mac-os"}
+                    onChange={this.handlePlatformChange.bind(this)}
+                  />{" "}
+                  <label
+                    htmlFor="platform-mac-os"
+                    className="text-sm font-bold text-black"
+                  >
+                    macOS
+                  </label>
+                </li>
+                <br />
+                <li>
+                  <input
+                    type="radio"
+                    name="platform"
+                    id="platform-windows"
+                    value="windows"
+                    checked={platform === "windows"}
+                    onChange={this.handlePlatformChange.bind(this)}
+                  />{" "}
+                  <label
+                    htmlFor="platform-windows"
+                    className="text-sm font-bold text-black"
+                  >
+                    Windows
+                  </label>
+                </li>
+                <br />
+                <li>
+                  <input
+                    type="radio"
+                    name="platform"
+                    id="platform-linux"
+                    value="linux"
+                    checked={platform === "linux"}
+                    onChange={this.handlePlatformChange.bind(this)}
+                  />{" "}
+                  <label
+                    htmlFor="platform-linux"
+                    className="text-sm font-bold text-black"
+                  >
+                    Linux
+                  </label>
+                </li>
+                <br />
+                <li>
+                  <input
+                    type="radio"
+                    name="platform"
+                    id="platform-wsl"
+                    value="wsl"
+                    checked={platform === "wsl"}
+                    onChange={this.handlePlatformChange.bind(this)}
+                  />{" "}
+                  <label
+                    htmlFor="platform-wsl"
+                    className="text-sm font-bold text-black"
+                  >
+                    Windows Subsystem for Linux (WSL)
+                  </label>
+                </li>
+              </ul>
+            </li>
+            <br />
             {userNeeds !== "need-custom" && (
               <>
                 <li>
@@ -549,77 +636,161 @@ class App extends Component {
                   </h4>
                   <br />
                   <ul className="list-reset">
-                    <li className="my-2">
-                      Windows:{" "}
-                      <input
-                        type="text"
-                        className="font-mono roman border inline-block w-1/4"
-                        id="windows-list-command"
-                        value=".\java --list-modules | clip"
-                        readOnly
-                      />{" "}
-                      <button
-                        className="inline-block border bg-grey-lighter p-1"
-                        onClick={this.handleClickCopyWindowsListModulesCommand.bind(
-                          this
-                        )}
-                      >
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 20 20"
-                          version="1.1"
-                          xmlns="http://www.w3.org/2000/svg"
+                    {platform === "mac-os" && (
+                      <li className="my-2">
+                        macOS:{" "}
+                        <input
+                          type="text"
+                          className="font-mono roman border inline-block w-1/4"
+                          id="mac-os-list-command"
+                          value="./java --list-modules | pbcopy"
+                          readOnly
+                        />{" "}
+                        <button
+                          className="inline-block border bg-grey-lighter p-1"
+                          onClick={this.handleClickCopyListModulesCommand.bind(
+                            this,
+                            "mac-os-list-command"
+                          )}
                         >
-                          <g
-                            stroke="none"
-                            strokeWidth="1"
-                            fill="#000000"
-                            fillRule="evenodd"
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 20 20"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <g id="icon-shape">
-                              <path d="M12.9728369,2.59456737 C12.7749064,1.12946324 11.5193533,0 10,0 C8.48064666,0 7.2250936,1.12946324 7.02716314,2.59456737 L5,3 L5,4 L3.99406028,4 C2.89451376,4 2,4.8927712 2,5.99406028 L2,18.0059397 C2,19.1054862 2.8927712,20 3.99406028,20 L16.0059397,20 C17.1054862,20 18,19.1072288 18,18.0059397 L18,5.99406028 C18,4.89451376 17.1072288,4 16.0059397,4 L15,4 L15,3 L12.9728369,2.59456737 Z M5,6 L4,6 L4,18 L16,18 L16,6 L15,6 L15,7 L5,7 L5,6 Z M10,4 C10.5522847,4 11,3.55228475 11,3 C11,2.44771525 10.5522847,2 10,2 C9.44771525,2 9,2.44771525 9,3 C9,3.55228475 9.44771525,4 10,4 Z" />
+                            <g
+                              stroke="none"
+                              strokeWidth="1"
+                              fill="#000000"
+                              fillRule="evenodd"
+                            >
+                              <g id="icon-shape">
+                                <path d="M12.9728369,2.59456737 C12.7749064,1.12946324 11.5193533,0 10,0 C8.48064666,0 7.2250936,1.12946324 7.02716314,2.59456737 L5,3 L5,4 L3.99406028,4 C2.89451376,4 2,4.8927712 2,5.99406028 L2,18.0059397 C2,19.1054862 2.8927712,20 3.99406028,20 L16.0059397,20 C17.1054862,20 18,19.1072288 18,18.0059397 L18,5.99406028 C18,4.89451376 17.1072288,4 16.0059397,4 L15,4 L15,3 L12.9728369,2.59456737 Z M5,6 L4,6 L4,18 L16,18 L16,6 L15,6 L15,7 L5,7 L5,6 Z M10,4 C10.5522847,4 11,3.55228475 11,3 C11,2.44771525 10.5522847,2 10,2 C9.44771525,2 9,2.44771525 9,3 C9,3.55228475 9.44771525,4 10,4 Z" />
+                              </g>
                             </g>
-                          </g>
-                        </svg>
-                      </button>
-                    </li>
-                    <li>
-                      macOS:{" "}
-                      <input
-                        type="text"
-                        className="font-mono roman border inline-block w-1/4"
-                        id="linux-list-command"
-                        value="./java --list-modules | pbcopy"
-                        readOnly
-                      />{" "}
-                      <button
-                        className="inline-block border bg-grey-lighter p-1"
-                        onClick={this.handleClickCopyLinuxListModulesCommand.bind(
-                          this
-                        )}
-                      >
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 20 20"
-                          version="1.1"
-                          xmlns="http://www.w3.org/2000/svg"
+                          </svg>
+                        </button>
+                        <button />
+                      </li>
+                    )}
+                    {platform === "windows" && (
+                      <li className="my-2">
+                        Windows:{" "}
+                        <input
+                          type="text"
+                          className="font-mono roman border inline-block w-1/4"
+                          id="windows-list-command"
+                          value=".\java --list-modules | clip"
+                          readOnly
+                        />{" "}
+                        <button
+                          className="inline-block border bg-grey-lighter p-1"
+                          onClick={this.handleClickCopyListModulesCommand.bind(
+                            this,
+                            "windows-list-command"
+                          )}
                         >
-                          <g
-                            stroke="none"
-                            strokeWidth="1"
-                            fill="#000000"
-                            fillRule="evenodd"
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 20 20"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <g id="icon-shape">
-                              <path d="M12.9728369,2.59456737 C12.7749064,1.12946324 11.5193533,0 10,0 C8.48064666,0 7.2250936,1.12946324 7.02716314,2.59456737 L5,3 L5,4 L3.99406028,4 C2.89451376,4 2,4.8927712 2,5.99406028 L2,18.0059397 C2,19.1054862 2.8927712,20 3.99406028,20 L16.0059397,20 C17.1054862,20 18,19.1072288 18,18.0059397 L18,5.99406028 C18,4.89451376 17.1072288,4 16.0059397,4 L15,4 L15,3 L12.9728369,2.59456737 Z M5,6 L4,6 L4,18 L16,18 L16,6 L15,6 L15,7 L5,7 L5,6 Z M10,4 C10.5522847,4 11,3.55228475 11,3 C11,2.44771525 10.5522847,2 10,2 C9.44771525,2 9,2.44771525 9,3 C9,3.55228475 9.44771525,4 10,4 Z" />
+                            <g
+                              stroke="none"
+                              strokeWidth="1"
+                              fill="#000000"
+                              fillRule="evenodd"
+                            >
+                              <g id="icon-shape">
+                                <path d="M12.9728369,2.59456737 C12.7749064,1.12946324 11.5193533,0 10,0 C8.48064666,0 7.2250936,1.12946324 7.02716314,2.59456737 L5,3 L5,4 L3.99406028,4 C2.89451376,4 2,4.8927712 2,5.99406028 L2,18.0059397 C2,19.1054862 2.8927712,20 3.99406028,20 L16.0059397,20 C17.1054862,20 18,19.1072288 18,18.0059397 L18,5.99406028 C18,4.89451376 17.1072288,4 16.0059397,4 L15,4 L15,3 L12.9728369,2.59456737 Z M5,6 L4,6 L4,18 L16,18 L16,6 L15,6 L15,7 L5,7 L5,6 Z M10,4 C10.5522847,4 11,3.55228475 11,3 C11,2.44771525 10.5522847,2 10,2 C9.44771525,2 9,2.44771525 9,3 C9,3.55228475 9.44771525,4 10,4 Z" />
+                              </g>
                             </g>
-                          </g>
-                        </svg>
-                      </button>
-                      <button />
-                    </li>
+                          </svg>
+                        </button>
+                      </li>
+                    )}
+                    {platform === "linux" && (
+                      <li className="my-2">
+                        Linux:{" "}
+                        <input
+                          type="text"
+                          className="font-mono roman border inline-block w-1/4"
+                          id="linux-list-command"
+                          value="./java --list-modules | xcopy"
+                          readOnly
+                        />{" "}
+                        <button
+                          className="inline-block border bg-grey-lighter p-1"
+                          onClick={this.handleClickCopyListModulesCommand.bind(
+                            this,
+                            "linux-list-command"
+                          )}
+                        >
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 20 20"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g
+                              stroke="none"
+                              strokeWidth="1"
+                              fill="#000000"
+                              fillRule="evenodd"
+                            >
+                              <g id="icon-shape">
+                                <path d="M12.9728369,2.59456737 C12.7749064,1.12946324 11.5193533,0 10,0 C8.48064666,0 7.2250936,1.12946324 7.02716314,2.59456737 L5,3 L5,4 L3.99406028,4 C2.89451376,4 2,4.8927712 2,5.99406028 L2,18.0059397 C2,19.1054862 2.8927712,20 3.99406028,20 L16.0059397,20 C17.1054862,20 18,19.1072288 18,18.0059397 L18,5.99406028 C18,4.89451376 17.1072288,4 16.0059397,4 L15,4 L15,3 L12.9728369,2.59456737 Z M5,6 L4,6 L4,18 L16,18 L16,6 L15,6 L15,7 L5,7 L5,6 Z M10,4 C10.5522847,4 11,3.55228475 11,3 C11,2.44771525 10.5522847,2 10,2 C9.44771525,2 9,2.44771525 9,3 C9,3.55228475 9.44771525,4 10,4 Z" />
+                              </g>
+                            </g>
+                          </svg>
+                        </button>
+                        <button />
+                      </li>
+                    )}
+                    {platform === "wsl" && (
+                      <li className="my-2">
+                        WSL:{" "}
+                        <input
+                          type="text"
+                          className="font-mono roman border inline-block w-1/4"
+                          id="wsl-list-command"
+                          value="./java --list-modules | clip.exe"
+                          readOnly
+                        />{" "}
+                        <button
+                          className="inline-block border bg-grey-lighter p-1"
+                          onClick={this.handleClickCopyListModulesCommand.bind(
+                            this,
+                            "wsl-list-command"
+                          )}
+                        >
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 20 20"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g
+                              stroke="none"
+                              strokeWidth="1"
+                              fill="#000000"
+                              fillRule="evenodd"
+                            >
+                              <g id="icon-shape">
+                                <path d="M12.9728369,2.59456737 C12.7749064,1.12946324 11.5193533,0 10,0 C8.48064666,0 7.2250936,1.12946324 7.02716314,2.59456737 L5,3 L5,4 L3.99406028,4 C2.89451376,4 2,4.8927712 2,5.99406028 L2,18.0059397 C2,19.1054862 2.8927712,20 3.99406028,20 L16.0059397,20 C17.1054862,20 18,19.1072288 18,18.0059397 L18,5.99406028 C18,4.89451376 17.1072288,4 16.0059397,4 L15,4 L15,3 L12.9728369,2.59456737 Z M5,6 L4,6 L4,18 L16,18 L16,6 L15,6 L15,7 L5,7 L5,6 Z M10,4 C10.5522847,4 11,3.55228475 11,3 C11,2.44771525 10.5522847,2 10,2 C9.44771525,2 9,2.44771525 9,3 C9,3.55228475 9.44771525,4 10,4 Z" />
+                              </g>
+                            </g>
+                          </svg>
+                        </button>
+                        <button />
+                      </li>
+                    )}
                   </ul>
                 </li>
                 <br />
@@ -968,25 +1139,58 @@ class App extends Component {
                 directory of the JDK:
               </h4>
               <br />
-              <div>
-                <textarea
-                  id="jlink-command-textarea"
-                  value={jlinkCommand}
-                  readOnly
-                  cols="80"
-                  rows="8"
-                  className="rounded shadow border font-mono text-xs"
-                  onClick={this.handleJlinkCommandTextareaClick}
-                />
-              </div>
-              <div>
-                <button
-                  onClick={this.handleCopyButtonClick.bind(this)}
-                  className="no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
-                >
-                  Copy
-                </button>
-              </div>
+              {platform !== "windows" && (
+                <>
+                  <div>
+                    <textarea
+                      id="non-windows-jlink-command-textarea"
+                      value={linuxJlinkCommand}
+                      readOnly
+                      cols="80"
+                      rows="8"
+                      className="rounded shadow border font-mono text-xs"
+                      onClick={this.handleJlinkCommandTextareaClick}
+                    />
+                  </div>
+                  <div>
+                    <button
+                      onClick={this.handleCopyButtonClick.bind(
+                        this,
+                        "non-windows-jlink-command-textarea"
+                      )}
+                      className="no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                </>
+              )}
+              {platform === "windows" && (
+                <>
+                  <div>
+                    <textarea
+                      id="windows-jlink-command-textarea"
+                      value={windowsJlinkCommand}
+                      readOnly
+                      cols="80"
+                      rows="8"
+                      className="rounded shadow border font-mono text-xs"
+                      onClick={this.handleJlinkCommandTextareaClick}
+                    />
+                  </div>
+                  <div>
+                    <button
+                      onClick={this.handleCopyButtonClick.bind(
+                        this,
+                        "windows-jlink-command-textarea"
+                      )}
+                      className="no-underline bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-1 px-4 border border-blue hover:border-transparent rounded"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                </>
+              )}
               <br />
               <br />
               <h3>
