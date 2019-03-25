@@ -1,13 +1,13 @@
 {
   "main.css": "/easyjre/static/css/main.ddcd6165.chunk.css",
-  "main.js": "/easyjre/static/js/main.8e9e372b.chunk.js",
-  "main.js.map": "/easyjre/static/js/main.8e9e372b.chunk.js.map",
+  "main.js": "/easyjre/static/js/main.5449b686.chunk.js",
+  "main.js.map": "/easyjre/static/js/main.5449b686.chunk.js.map",
   "runtime~main.js": "/easyjre/static/js/runtime~main.254c89cb.js",
   "runtime~main.js.map": "/easyjre/static/js/runtime~main.254c89cb.js.map",
   "static/js/2.66cabc59.chunk.js": "/easyjre/static/js/2.66cabc59.chunk.js",
   "static/js/2.66cabc59.chunk.js.map": "/easyjre/static/js/2.66cabc59.chunk.js.map",
   "index.html": "/easyjre/index.html",
-  "precache-manifest.7880c531edbca13a97e98061319ac471.js": "/easyjre/precache-manifest.7880c531edbca13a97e98061319ac471.js",
+  "precache-manifest.7557f7fef5abbd7fbeebce08f4a01746.js": "/easyjre/precache-manifest.7557f7fef5abbd7fbeebce08f4a01746.js",
   "service-worker.js": "/easyjre/service-worker.js",
   "static/css/main.ddcd6165.chunk.css.map": "/easyjre/static/css/main.ddcd6165.chunk.css.map"
 }
