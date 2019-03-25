@@ -720,7 +720,7 @@ class App extends Component {
                           type="text"
                           className="font-mono roman border inline-block w-1/4"
                           id="linux-list-command"
-                          value="./java --list-modules | xcopy"
+                          value="./java --list-modules | xclip"
                           readOnly
                         />{" "}
                         <button
