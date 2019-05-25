@@ -159,7 +159,7 @@ export default function TransferModulesPaper(props: ITransferModulesPaperProps) 
             <Icon color="secondary">warning</Icon>
           </Box>
           <p>
-            Paste your JDK modules above to customize which root modules are
+            Paste your JDK modules above to customize which modules are
             included in the JRE.{" "}
             {props.intention !== CHOOSE_JDK_MODULES && (
               <span>Ignore this if you'd like to add them manually below.</span>
@@ -170,7 +170,7 @@ export default function TransferModulesPaper(props: ITransferModulesPaperProps) 
       {hasModules && (
         <>
           <p>
-            The JDK comes with many root modules which contain the JDK core
+            The JDK comes with many modules which contain the JDK core
             classes. The modules prefixed with <code>jdk.</code> are typically
             not needed for a production JRE. Below, all non-JDK modules have
             been included in the JRE. This will get you up and running quickly
