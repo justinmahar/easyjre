@@ -165,7 +165,7 @@ export default function CreateJREContainer(props: ICreateJREContainerProps) {
                   (props.jdkBinPath === "." ? "Run this in bin. " : "") +
                   "This creates your " +
                   jreFolderName +
-                  " directory. Be sure you have the proper write privileges!"
+                  " directory. Be sure you have the proper write permissions!"
                 }
                 onChange={e => e.preventDefault()}
                 onClick={(e: any) => {
