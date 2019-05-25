@@ -33,7 +33,6 @@
     "@types/react": "16.8.18",
     "@types/react-dom": "16.8.4",
     "@types/react-router-dom": "^4.3.3",
-    "gh-pages": "^2.0.1",
     "notistack": "^0.8.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -41,5 +40,8 @@
     "react-scripts": "3.0.1",
     "typeface-roboto": "0.0.54",
     "typescript": "3.4.5"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
   }
 }
