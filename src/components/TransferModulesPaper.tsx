@@ -13,7 +13,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import * as React from "react";
 import { CHOOSE_JDK_MODULES, IIntention } from "../intentions";
 
-export interface IRootModulesPaperProps {
+export interface ITransferModulesPaperProps {
   intention: IIntention;
   right: string[];
   setRight: React.Dispatch<React.SetStateAction<string[]>>;
@@ -51,7 +51,7 @@ function union(a: string[], b: string[]) {
   return [...a, ...not(b, a)];
 }
 
-export default function RootModulesPaper(props: IRootModulesPaperProps) {
+export default function TransferModulesPaper(props: ITransferModulesPaperProps) {
   const classes = useStyles();
   const [checked, setChecked] = React.useState<string[]>([]);
   const [left, setLeft] = [props.left, props.setLeft];
@@ -151,7 +151,7 @@ export default function RootModulesPaper(props: IRootModulesPaperProps) {
       }}
     >
       <Typography variant="h6" style={{ marginBottom: "1rem" }}>
-        JDK Root Modules
+        JDK Modules
       </Typography>
       {!hasModules && (
         <Box style={{ display: "flex", alignItems: "flex-start" }}>

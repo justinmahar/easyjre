@@ -32,7 +32,7 @@ export default function ManuallySpecifiedModulesPaper(
         custom ones. Comma-separate the values and don't use spaces.
       </p>
       <p>
-        You can specify root JDK modules (such as <code>java.base</code>) here
+        You can specify JDK modules (such as <code>java.se</code>) here
         manually if you'd like, too.
       </p>
       <div>

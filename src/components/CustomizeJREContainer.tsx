@@ -5,7 +5,7 @@ import JdkBinPathPaper from "./JDKBinDirectoryPaper";
 import MiscOptionsPaper from "./MiscOptionsPaper";
 import ManuallySpecifiedModulesPaper from "./ManuallySpecifiedModulesPaper";
 import ModulePathPaper from "./ModulePathPaper";
-import RootModulesPaper from "./RootModulesPaper";
+import TransferModulesPaper from "./TransferModulesPaper";
 
 export interface ICustomizeJREContainerProps {
   maxWidth: false | "md" | "xs" | "sm" | "lg" | "xl" | undefined;
@@ -53,7 +53,7 @@ export default function CustomizeJREContainer(
         Customize Your JRE
       </Typography>
       {props.intention !== MANUAL_MODULES && (
-        <RootModulesPaper
+        <TransferModulesPaper
           intention={props.intention}
           right={props.includedJDKModules}
           setRight={props.setIncludedJDKModules}

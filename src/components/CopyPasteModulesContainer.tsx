@@ -188,7 +188,7 @@ export default function CopyPasteModulesContainer(
               )}
               <Chip
                 icon={<Icon>not_interested</Icon>}
-                label="No JDK Root Modules"
+                label="No JDK Modules"
               />
             </>
           )}
@@ -209,7 +209,7 @@ export default function CopyPasteModulesContainer(
                 label={
                   props.includedJDKModules.length +
                   props.excludedJDKModules.length +
-                  " JDK Root Modules"
+                  " JDK Modules"
                 }
                 color="secondary"
                 style={{ marginRight: ".5rem" }}
