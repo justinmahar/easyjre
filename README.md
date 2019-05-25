@@ -6,29 +6,17 @@ To get started, visit the following site:
 
 - https://justinmahar.github.io/easyjre/
 
-The project was created using React and is hosted on GitHub pages. Coffee icon by [Feather](https://feathericons.com/).
-
 # Contributions
 
 If you'd like the contribute to the project, feel free to send a pull request. 
 
-You can also easily add new JDK vendors to the project. See below.
-
-## Adding New JDK Vendors
-
-For this project, JDK information is stored in the following file: `public/vendors.json` ([view file](https://github.com/justinmahar/easyjre/blob/master/public/vendors.json))
-
-If you'd like to add a new vendor, fork the project and send me a pull request.
-
-Happy JRE building!
-
 # Development
 
-This project requires Node.js; I used v9.11.2.
+Clone the project and run `npm install` to install the dependencies. 
 
-Clone the project and run `npm install` to install the dependencies. Run `npm start` to start the development server.
+Run `npm start` to start the development server.
 
-## npm scripts
+## Development Scripts
 
 ### `npm start`
 
@@ -40,7 +28,13 @@ Builds the React app to the `build` directory.
 
 ### `npm run deploy`
 
-Deploys the built project in the `build` directory to the GitHub pages site `homepage` specified in `package.json`. The script uses the `gh-pages` dependency to do all the heavy lifting. Make sure you `npm run build` before deploying.
+Deploys the built project in the `build` directory to the GitHub pages site `homepage` specified in `package.json`. 
+
+The script uses the `gh-pages` dependency to do all the heavy lifting. Make sure you `npm run build` before deploying.
+
+# Misc
+
+Coffee icon by [Feather](https://feathericons.com/).
 
 # License 
 

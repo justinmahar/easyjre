@@ -1,0 +1,12 @@
+code {
+  border: solid 1px rgb(222, 230, 233);
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  border-radius: 0.2rem;
+}
+code:hover {
+  background: rgb(237, 241, 245);
+  cursor: default;
+}
