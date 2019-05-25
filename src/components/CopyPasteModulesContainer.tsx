@@ -45,7 +45,7 @@ export default function CopyPasteModulesContainer(
   };
 
   const navigatorClipboardSupported =
-    !clipboardErrorOccurred && !!navigator.clipboard;
+    !clipboardErrorOccurred && !!navigator.clipboard && !!navigator.clipboard.readText;
 
   const parsePastedList = (text: string) => {
     const [jdkVersion, includedModules, excludedModules] = parseJDKModules(
