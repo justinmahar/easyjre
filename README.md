@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/justinmahar/easyjre.svg?branch=master)](https://travis-ci.org/justinmahar/easyjre)
+
 # Easy JRE
 
 This tool allows you to easily create a custom OpenJDK JRE using `jlink`.
