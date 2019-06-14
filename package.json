@@ -8,7 +8,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && gh-pages -d build"
+    "copy-cname": "mkdir -p build && cp CNAME ./build",
+    "predeploy": "rm -rf build && npm run build",
+    "deploy": "gh-pages -d build",
+    "updoc": "git add README.md && git diff-index --quiet HEAD README.md || git commit README.md -m \"Update README.\" && git push",
+    "updog": "npm run updoc"
   },
   "eslintConfig": {
     "extends": "react-app"
