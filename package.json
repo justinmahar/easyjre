@@ -2,7 +2,7 @@
   "name": "easyjre",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://justinmahar.github.io/easyjre/",
+  "homepage": "https://jolly-kilby-752bdd.netlify.com/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
