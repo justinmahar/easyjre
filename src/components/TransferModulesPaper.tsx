@@ -171,10 +171,10 @@ export default function TransferModulesPaper(props: ITransferModulesPaperProps) 
         <>
           <p>
             The JDK comes with many modules which contain the JDK core
-            classes. The modules prefixed with <code>jdk.</code> are typically
-            not needed for a production JRE. Below, all non-JDK modules have
+            classes. Below, all modules that aren't prefixed with <code>jdk.</code> have
             been included in the JRE. This will get you up and running quickly
-            without needing to use an entire JDK.
+            without needing to use an entire JDK. From there, you can pick and choose 
+            the JDK modules your project depends on.
           </p>
           <p>
             Feel free to include or exclude any modules you might or might not
