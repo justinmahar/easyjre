@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b08b9c41da7eb59fe194fbc49c0feaa4",
+    "revision": "733a5d3c9ed60189f6bb8cb3c28ff67a",
     "url": "/easyjre/index.html"
   },
   {
-    "revision": "bb1e4b918f08bb094d31",
+    "revision": "8bd07d56758b2b017e6f",
     "url": "/easyjre/static/css/main.dbe92606.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/easyjre/static/js/2.e69dd503.chunk.js"
   },
   {
-    "revision": "bb1e4b918f08bb094d31",
-    "url": "/easyjre/static/js/main.bf94284e.chunk.js"
+    "revision": "8bd07d56758b2b017e6f",
+    "url": "/easyjre/static/js/main.bce5624f.chunk.js"
   },
   {
     "revision": "3116f46cf25e142be211",
