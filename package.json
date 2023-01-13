@@ -1,6 +1,6 @@
 {
   "name": "easyjre",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "coreVersion": "2.4.9",
   "author": "Justin Mahar <contact@justinmahar.com>",
   "description": "Easily create an OpenJDK JRE using jlink!",
