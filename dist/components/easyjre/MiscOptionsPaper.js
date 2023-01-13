@@ -36,7 +36,7 @@ function MiscOptionsPaper(props) {
         React.createElement("p", null, "Choose the level of compression. ZIP compression offers a significant reduction in size with a small hit to class loading performance."),
         React.createElement("div", null,
             React.createElement(material_1.FormControl, { fullWidth: true },
-                React.createElement(material_1.InputLabel, { htmlFor: "age-simple" }, "Compression Level"),
+                React.createElement(material_1.InputLabel, { htmlFor: "age-simple", style: { paddingLeft: 2, paddingRight: 2, background: 'white' } }, "Compression Level"),
                 React.createElement(material_1.Select, { value: props.compressionLevel, onChange: (e) => props.setCompressionLevel(parseInt(e.target.value + '')), inputProps: {
                         name: 'age',
                         id: 'age-simple',

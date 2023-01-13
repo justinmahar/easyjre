@@ -49,7 +49,7 @@ function DownloadJDKContainer(props) {
             React.createElement(material_1.Typography, { variant: "h6" }, "Download JDK"),
             React.createElement("p", null, "If you haven't already, select, download, and unpack your desired JDK (9 or greater):"),
             React.createElement(material_1.FormControl, { fullWidth: true, style: { marginTop: '0.5rem' } },
-                React.createElement(material_1.InputLabel, { htmlFor: "vendor" }, "JDK To Download"),
+                React.createElement(material_1.InputLabel, { htmlFor: "vendor", style: { paddingLeft: 2, paddingRight: 2, background: 'white' } }, "JDK To Download"),
                 React.createElement(material_1.Select, { value: selectedVendorIndex, inputProps: {
                         name: 'vendor',
                         id: 'vendor',
