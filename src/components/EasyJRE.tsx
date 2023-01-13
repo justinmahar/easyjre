@@ -97,7 +97,7 @@ export const EasyJRE: React.FC = () => {
             variant="h6"
             align="center"
             color="textSecondary"
-            style={{ marginTop: '2.5rem' }}
+            style={{ marginTop: '2.5rem', marginBottom: '3.5rem' }}
           >
             If this project helped you, please{' '}
             <Link href="https://github.com/justinmahar/easyjre">Star it on GitHub</Link> so others can find it. :)
