@@ -29,7 +29,7 @@ This tool allows you to easily create a custom OpenJDK JRE using `jlink`.
   - Take the complexity out of using `jlink` to create a JRE.
 - **🔢 Supports multiple use cases**
   - Whether you want a standard Java SE JRE or something highly custom, EasyJRE has you covered.
-- **💁 Easy module selection**
+- **✅ Easy module selection**
   - Quickly select the modules you'd like to include, or enter them manually.
 - **💻 `jlink` command generation**
   - This tool will turn all of your selections into the exact `jlink` command to run to get the job done!
