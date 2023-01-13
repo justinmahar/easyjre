@@ -1,0 +1,51 @@
+renameFiles: []
+replaceFiles:
+  - .node-version
+  - CODE_OF_CONDUCT.md
+  - LICENSE.md
+  - lockblocks.yml
+  - public/support
+  - public/NOTE.md
+  - src/stories/core
+fillFiles:
+  - .github/FUNDING.yml
+deleteFiles: []
+excludePaths:
+  - .git
+  - .lockblocks
+  - dist
+  - node_modules
+  - public
+  - README.template.md
+  - storybook-static
+updateJson:
+  - path: package.json
+    updateFields:
+      - key: version
+        as: coreVersion
+      - key: devDependencies
+        merge: true
+      - key: peerDependencies
+        merge: true
+      - key: scripts.build
+        replace: true
+      - key: scripts.start
+        replace: true
+      - key: scripts.storybook
+        replace: true
+      - key: scripts.build-storybook
+        replace: true
+      - key: scripts.preship
+        replace: true
+      - key: scripts.ship
+        replace: true
+      - key: scripts.postship
+        replace: true
+      - key: scripts.update
+        replace: true
+    deleteFields:
+      - devDependencies.html-webpack-plugin
+      - scripts.watch
+      - scripts.lint
+      - scripts.upgrade-storybook
+updateYaml: []

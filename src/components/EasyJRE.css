@@ -1,0 +1,27 @@
+code {
+  border: solid 1px rgb(222, 230, 233);
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  border-radius: 0.2rem;
+}
+code:hover {
+  background: rgb(237, 241, 245);
+  cursor: default;
+}
+
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
+

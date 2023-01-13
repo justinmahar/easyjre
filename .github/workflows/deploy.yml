@@ -1,0 +1,26 @@
+# [lock-all/] 🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫
+# This workflow will do a clean install of node dependencies, build the source code, run tests, build Storybook, and deploy
+# the static Storybook site to GitHub Pages. For more info see: https://github.com/JamesIves/github-pages-deploy-action
+name: Deploy
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Install and Build 🔧
+        run: |
+          npm ci
+          npm run test
+          npm run build-storybook
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: storybook-static # The folder the action should deploy.

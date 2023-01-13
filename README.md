@@ -1,49 +1,136 @@
-[![Build Status](https://travis-ci.org/justinmahar/easyjre.svg?branch=master)](https://travis-ci.org/justinmahar/easyjre)
+<h2 align="center">
+  ☕ EasyJRE
+</h2>
+<h3 align="center">
+  Easily create an OpenJDK JRE using jlink!
+</h3>
+<p align="center">
+  <a href="https://badge.fury.io/js/easyjre" target="_blank" rel="noopener noreferrer"><img src="https://badge.fury.io/js/easyjre.svg" alt="npm Version" /></a>&nbsp;
+  <a href="https://github.com/justinmahar/easyjre/" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/GitHub-Source-success" alt="View project on GitHub" /></a>&nbsp;
+  <a href="https://github.com/justinmahar/easyjre/actions?query=workflow%3ADeploy" target="_blank" rel="noopener noreferrer"><img src="https://github.com/justinmahar/easyjre/workflows/Deploy/badge.svg" alt="Deploy Status" /></a>&nbsp;
+  <a href="https://github.com/sponsors/justinmahar" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" alt="Sponsor"/></a>
+</p>
 
-# Easy JRE
+## Get Started
+
+### **[Open EasyJRE](https://justinmahar.github.io/easyjre/?path=/story/tools--easy-jre-story)**
+
+## Documentation
+
+Read the **[official documentation](https://justinmahar.github.io/easyjre/)**.
+
+## Overview
 
 This tool allows you to easily create a custom OpenJDK JRE using `jlink`.
 
-To get started, visit the following site:
+### Features include:
 
-- https://justinmahar.github.io/easyjre/
+- **🚀 Create a JRE quickly and easily!**
+  - Lots of options to quickly and easily make your JRE with jlink.
 
-# Contributions
+[lock:donate]::🚫---------------------------------------
 
-If you'd like the contribute to the project, feel free to send a pull request. 
+## Donate 
 
-# Development
+I hope this project makes your life a little easier! If it does and you'd like to show your appreciation, consider supporting the project with a coffee or sponsorship. 
 
-Clone the project and run `npm install` to install the dependencies. 
+Your support helps keep the project going and will earn you some serious virtual high fives. Maybe even a virtual fist bump if you're feeling extra cool.
 
-Run `npm start` to start the development server.
+<a href="https://github.com/sponsors/justinmahar">
+  <img src="https://justinmahar.github.io/react-kindling/support/sponsor.png" alt="Sponsor via GitHub" height="35" />
+</a> <a href="https://paypal.me/thejustinmahar/5">
+  <img src="https://justinmahar.github.io/react-kindling/support/coffee-1.png" alt="Buy me a coffee" height="35" />
+</a> <a href="https://paypal.me/thejustinmahar/15">
+  <img src="https://justinmahar.github.io/react-kindling/support/coffee-3.png" alt="Buy me 3 coffees" height="35" />
+</a> <a href="https://paypal.me/thejustinmahar/25">
+  <img src="https://justinmahar.github.io/react-kindling/support/coffee-5.png" alt="Buy me 5 coffees" height="35" />
+</a>
 
-## Development Scripts
+[/lock:donate]::---------------------------------------🚫
 
-### `npm start`
+## Table of Contents 
 
-Starts the development server.
+- [Get Started](#get-started)
+  - [**Open EasyJRE**](#open-easyjre)
+- [Documentation](#documentation)
+- [Overview](#overview)
+  - [Features include:](#features-include)
+- [Donate](#donate)
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Via Website](#via-website)
+  - [Via `npm`](#via-npm)
+- [TypeScript](#typescript)
+- [Icon Attribution](#icon-attribution)
+- [Contributing](#contributing)
+- [⭐ Found It Helpful? Star It!](#-found-it-helpful-star-it)
+- [License](#license)
 
-### `npm run build`
+## Installation
 
-Builds the React app to the `build` directory.
+```
+npm i easyjre
+```
 
-### `npm run deploy`
+## Usage
 
-Deploys the built project in the `build` directory to the GitHub pages site `homepage` specified in `package.json`. 
+### Via Website
 
-The script uses the `gh-pages` dependency to do all the heavy lifting. Make sure you `npm run build` before deploying.
+Go here: **[EasyJRE](https://justinmahar.github.io/easyjre/?path=/story/tools--easy-jre-story)**
 
-# Misc
+### Via `npm`
 
-Coffee icon by [Feather](https://feathericons.com/).
+If you want to use the tool in your own project, you can install this package via npm and use the exported `EasyJRE` component.
 
-# License 
+```jsx
+import { EasyJRE } from 'easyjre';
+```
 
-Copyright &copy; Justin Mahar
+```jsx
+<EasyJRE />
+```
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+You can use CSS to hide the header and footer by selecting and styling the `.easyjre-header` and `.easyjre-footer` classes with `display: none`, like so:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+```css
+.easyjre-header, .easyjre-footer {
+  display: none !important;
+}
+```
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+[lock:typescript]::🚫---------------------------------------
+
+## TypeScript
+
+Type definitions have been included for [TypeScript](https://www.typescriptlang.org/) support.
+
+[/lock:typescript]::---------------------------------------🚫
+
+[lock:icon]::🚫---------------------------------------
+
+## Icon Attribution
+
+Favicon by [Twemoji](https://github.com/twitter/twemoji).
+
+[/lock:icon]::---------------------------------------🚫
+
+[lock:contributing]::🚫---------------------------------------
+
+## Contributing
+
+Open source software is awesome and so are you. 😎
+
+Feel free to submit a pull request for bugs or additions, and make sure to update tests as appropriate. If you find a mistake in the docs, send a PR! Even the smallest changes help.
+
+For major changes, open an issue first to discuss what you'd like to change.
+
+[/lock:contributing]::---------------------------------------🚫
+
+## ⭐ Found It Helpful? [Star It!](https://github.com/justinmahar/easyjre/stargazers)
+
+If you found this project helpful, let the community know by giving it a [star](https://github.com/justinmahar/easyjre/stargazers): [👉⭐](https://github.com/justinmahar/easyjre/stargazers)
+
+## License
+
+See [LICENSE.md](https://justinmahar.github.io/easyjre/?path=/story/license--page).
