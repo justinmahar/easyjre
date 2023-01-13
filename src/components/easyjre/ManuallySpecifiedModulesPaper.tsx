@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Paper, Typography, InputAdornment, IconButton, Icon, TextField } from '@material-ui/core';
+import { Paper, Typography, InputAdornment, IconButton, Icon, TextField } from '@mui/material';
 
 export interface IManuallySpecifiedModulesPaperProps {
   manuallySpecifiedModules: string;

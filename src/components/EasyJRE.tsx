@@ -1,5 +1,5 @@
-import { Link, Typography } from '@material-ui/core';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { Link, Typography } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import '../css/material-icons.css';

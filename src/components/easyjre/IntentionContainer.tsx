@@ -1,4 +1,4 @@
-import { Container, List, ListItem, ListItemIcon, ListItemText, Paper, Radio, Typography } from '@material-ui/core';
+import { Container, List, ListItem, ListItemIcon, ListItemText, Paper, Radio, Typography } from '@mui/material';
 import * as React from 'react';
 import INTENTIONS, { IIntention } from '../intentions';
 

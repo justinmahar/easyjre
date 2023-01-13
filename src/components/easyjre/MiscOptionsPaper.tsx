@@ -8,7 +8,7 @@ import {
   Paper,
   Select,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import * as React from 'react';
 
 export interface IMiscOptionsPaperProps {
@@ -41,7 +41,9 @@ export default function MiscOptionsPaper(props: IMiscOptionsPaperProps) {
       </p>
       <div>
         <FormControl fullWidth>
-          <InputLabel htmlFor="age-simple">Compression Level</InputLabel>
+          <InputLabel htmlFor="age-simple" style={{ paddingLeft: 2, paddingRight: 2, background: 'white' }}>
+            Compression Level
+          </InputLabel>
           <Select
             value={props.compressionLevel}
             onChange={(e) => props.setCompressionLevel(parseInt(e.target.value + ''))}

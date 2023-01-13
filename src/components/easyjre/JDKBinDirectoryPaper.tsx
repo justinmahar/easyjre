@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Paper, Typography, TextField, InputAdornment, IconButton, Icon } from '@material-ui/core';
+import { Paper, Typography, TextField, InputAdornment, IconButton, Icon } from '@mui/material';
 
 export interface IJdkBinPathPaperProps {
   jdkBinPath: string;

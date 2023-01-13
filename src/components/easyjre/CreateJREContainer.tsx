@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Icon,
-  IconButton,
-  InputAdornment,
-  Paper,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, Container, Icon, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import * as React from 'react';
 import { IPlatform, WINDOWS } from '../platforms';
@@ -106,7 +96,7 @@ export default function CreateJREContainer(props: ICreateJREContainerProps) {
     const commandTextarea: any = document.getElementById('jlink-command');
     commandTextarea.select();
     document.execCommand('copy');
-    enqueueSnackbar('✔️ Copied!');
+    enqueueSnackbar('✅ Copied!');
   };
 
   return (

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Typography } from '@material-ui/core';
+import { Container, Typography } from '@mui/material';
 
 export interface IHeroContainerProps {
   maxWidth: false | 'md' | 'xs' | 'sm' | 'lg' | 'xl' | undefined;

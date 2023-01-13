@@ -7,8 +7,9 @@ import {
   MenuItem,
   Paper,
   Select,
+  SelectChangeEvent,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import * as React from 'react';
 import VENDORS, { IVendor } from '../vendors';
 
@@ -19,12 +20,7 @@ export interface IDownloadJDKContainerProps {
 export default function DownloadJDKContainer(props: IDownloadJDKContainerProps) {
   const [selectedVendorIndex, setSelectedVendorIndex] = React.useState(0);
 
-  const handleMenuItemClick = (
-    e: React.ChangeEvent<{
-      name?: string | undefined;
-      value: unknown;
-    }>,
-  ) => {
+  const handleMenuItemClick = (e: SelectChangeEvent<number>) => {
     const value: any = e.target.value;
     if (typeof value !== 'undefined') {
       setSelectedVendorIndex(parseInt(value));
@@ -47,19 +43,16 @@ export default function DownloadJDKContainer(props: IDownloadJDKContainerProps) 
         <Typography variant="h6">Download JDK</Typography>
         <p>If you haven't already, select, download, and unpack your desired JDK (9 or greater):</p>
         <FormControl fullWidth style={{ marginTop: '0.5rem' }}>
-          <InputLabel htmlFor="vendor">JDK To Download</InputLabel>
+          <InputLabel htmlFor="vendor" style={{ paddingLeft: 2, paddingRight: 2, background: 'white' }}>
+            JDK To Download
+          </InputLabel>
           <Select
             value={selectedVendorIndex}
             inputProps={{
               name: 'vendor',
               id: 'vendor',
             }}
-            onChange={(
-              e: React.ChangeEvent<{
-                name?: string | undefined;
-                value: unknown;
-              }>,
-            ) => handleMenuItemClick(e)}
+            onChange={(e: SelectChangeEvent<number>) => handleMenuItemClick(e)}
           >
             {selectItems}
           </Select>

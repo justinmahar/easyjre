@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
   Button,
-} from '@material-ui/core';
+} from '@mui/material';
 import * as React from 'react';
 import { useSnackbar } from 'notistack';
 import { IPlatform, MAC_OS } from '../platforms';
@@ -35,7 +35,7 @@ export default function CopyPasteModulesContainer(props: ICopyPasteModulesContai
     const commandTextarea: any = document.getElementById('list-modules-command');
     commandTextarea.select();
     document.execCommand('copy');
-    enqueueSnackbar('✔️ Copied!');
+    enqueueSnackbar('✅ Copied!');
   };
 
   const navigatorClipboardSupported =
@@ -48,7 +48,7 @@ export default function CopyPasteModulesContainer(props: ICopyPasteModulesContai
       props.setIncludedJDKModules(includedModules);
       props.setExcludedJDKModules(excludedModules);
       enqueueSnackbar(
-        '✔️ Added ' + (includedModules.length + excludedModules.length) + ' modules for JDK ' + jdkVersion,
+        '✅ Added ' + (includedModules.length + excludedModules.length) + ' modules for JDK ' + jdkVersion,
       );
     } else {
       enqueueSnackbar('❌️ Not a valid list of JDK modules.');
@@ -146,7 +146,6 @@ export default function CopyPasteModulesContainer(props: ICopyPasteModulesContai
                     type="text"
                     multiline
                     rows={1}
-                    rowsMax={1}
                     id="list-modules-pasted"
                     value={pastedModulesList}
                     //fullWidth

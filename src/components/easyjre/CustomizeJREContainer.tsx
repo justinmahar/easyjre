@@ -1,4 +1,4 @@
-import { Container, Typography } from '@material-ui/core';
+import { Container, Typography } from '@mui/material';
 import * as React from 'react';
 import { CHOOSE_JDK_MODULES, IIntention, MANUAL_MODULES } from '../intentions';
 import JdkBinPathPaper from './JDKBinDirectoryPaper';
