@@ -1,23 +1,19 @@
-/*
- * More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
- * More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
- * More on args: https://storybook.js.org/docs/react/writing-stories/args
- * More on argTypes: https://storybook.js.org/docs/react/api/argtypes
- */
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import { EasyJRE } from '../components/EasyJRE';
 
-export default {
-  title: 'Tools',
-  component: EasyJRE,
-} as ComponentMeta<typeof EasyJRE>;
+// === Setup ===
+const StoryComponent = EasyJRE; // <-- Set to your component
+const meta: Meta<typeof StoryComponent> = {
+  title: 'Tools', // <-- Set to your story title
+  component: StoryComponent,
+  parameters: {
+    options: { showPanel: false },
+  },
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-const Template: ComponentStory<typeof EasyJRE> = (args) => <EasyJRE {...args} />;
-
-export const EasyJREStory = Template.bind({});
-EasyJREStory.args = {};
-EasyJREStory.story = {
+// === Stories ===
+export const Hello: Story = {
   name: 'EasyJRE',
 };
