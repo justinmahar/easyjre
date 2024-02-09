@@ -1,7 +1,7 @@
 {
   "name": "easyjre",
   "version": "1.0.6",
-  "coreVersion": "3.0.7",
+  "coreVersion": "3.0.9",
   "author": "Justin Mahar <contact@justinmahar.com>",
   "description": "Easily create an OpenJDK JRE using jlink!",
   "homepage": "https://justinmahar.github.io/easyjre/",
@@ -55,7 +55,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.15",
-    "lockblocks": "^1.1.4",
+    "lockblocks": "^1.1.8",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
